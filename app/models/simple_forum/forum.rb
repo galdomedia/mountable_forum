@@ -24,6 +24,8 @@ module SimpleForum
 #      end
 #    end
 
+    scope :default_order, order("#{SimpleForum::Forum}.position ASC")
+
     validates :name, :presence => true
 
     attr_accessible :name, :body, :parent_id, :position

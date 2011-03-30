@@ -4,7 +4,7 @@ module SimpleForum
     belongs_to :user
 
     belongs_to :forum,
-               :class => "SimpleForum::Forum"
+               :class_name => "SimpleForum::Forum"
 
     has_many :posts,
              :order => "#{SimpleForum::Post.quoted_table_name}.created_at ASC",
@@ -70,7 +70,7 @@ module SimpleForum
       !is_closed?
     end
 
-    alias_method :is_open, :is_open?
+    alias_method :is_open?, :is_open
 
     def open!
       update_attribute(:is_closed, false)
