@@ -1,0 +1,16 @@
+<ul>
+  <% (methods - Object.methods).grep(/path/).sort.each do |m| %>
+      <%= content_tag :li, m %>
+  <% end %>
+</ul>
+<ul>
+  <% forum.methods.grep(/path/).sort.each do |m| %>
+      <%= content_tag :li, m %>
+  <% end %>
+</ul>
+
+<% @forums.each do |f| %>
+    <%= link_to f.name, 'simple_forum_forum_path(f)' %>
+
+
+<% end %>

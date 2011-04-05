@@ -1,6 +1,8 @@
 module SimpleForum
   class Forum < ::ActiveRecord::Base
 
+    set_table_name 'simple_forum_forums' #should work table_name_prefix in SimpleForum module but it's not!'
+
     #acts_as_nested_set
 
     has_many :topics,
@@ -24,7 +26,7 @@ module SimpleForum
 #      end
 #    end
 
-    scope :default_order, order("#{SimpleForum::Forum}.position ASC")
+    scope :default_order, order("#{SimpleForum::Forum.quoted_table_name}.position ASC")
 
     validates :name, :presence => true
 
