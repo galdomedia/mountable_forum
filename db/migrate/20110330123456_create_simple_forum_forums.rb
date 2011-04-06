@@ -6,7 +6,7 @@ class CreateSimpleForumForums < ::ActiveRecord::Migration
       t.integer :position, :default => 0
       t.boolean :is_topicable, :default => true
 
-      t.references :recent_topic
+#      t.references :recent_topic
       t.references :recent_post
 
 #      t.references :parent

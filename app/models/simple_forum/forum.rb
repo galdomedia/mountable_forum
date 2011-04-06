@@ -40,5 +40,13 @@ module SimpleForum
       end
     end
 
+    def recent_activity?(user)
+      SimpleForum::UserActivity.new(user).recent_activity?(self)
+    end
+
+    def bang_recent_activity(user)
+      SimpleForum::UserActivity.new(user).bang(self)
+    end
+
   end
 end

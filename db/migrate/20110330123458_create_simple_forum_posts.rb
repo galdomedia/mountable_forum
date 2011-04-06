@@ -7,6 +7,8 @@ class CreateSimpleForumPosts < ::ActiveRecord::Migration
 
       t.text :body
 
+      t.boolean :is_deleted
+
       t.string :slug_cache
 
       t.timestamps

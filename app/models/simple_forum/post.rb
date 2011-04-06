@@ -1,14 +1,16 @@
 module SimpleForum
   class Post < ::ActiveRecord::Base
 
-    set_table_name 'simple_forum_post' #should work table_name_prefix in SimpleForum module but it's not!'
+    set_table_name 'simple_forum_posts' #should work table_name_prefix in SimpleForum module but it's not!'
 
-    belongs_to :user
+    belongs_to :user, :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
 
     belongs_to :topic,
+               :counter_cache => true,
                :class_name => "SimpleForum::Topic"
 
     belongs_to :forum,
+               :counter_cache => true,
                :class_name => "SimpleForum::Forum"
 
     before_validation :set_forum_id, :on => :create
@@ -34,7 +36,7 @@ module SimpleForum
     end
 
     def on_page
-      before_count = topic.posts.size(:conditions => ["#{SimpleForum::Post.quoted_table_name}.created_at<?", created_at])
+      before_count = topic.posts.where(["#{SimpleForum::Post.quoted_table_name}.created_at<?", created_at]).size
       [((before_count + 1).to_f / SimpleForum::Post.per_page).ceil.to_i, 1].max
     end
 
@@ -47,7 +49,15 @@ module SimpleForum
     end
 
     def output_without_tags
-      HTML::FullSanitizer.new.sanitize(output.gsub(/\<fieldset\>\<legend\>.*\<\/legend\>\<blockquote\>(.|\n)*\<\/blockquote\>/, '')).html_safe
+      HTML::FullSanitizer.new.sanitize(output.gsub(/\<fieldset\>\<legend\>.*\<\/legend\>\<blockquote\>(.|\n)*\<\/blockquote\>/, ''))
+    end
+
+    def editable_by?(user)
+      created_at < 15.minutes.ago && user == self.user
+    end
+
+    def destroyable_by?(user)
+      user == self.user
     end
 
     protected

@@ -2,16 +2,29 @@ module SimpleForum
   class TopicsController < ApplicationController
     respond_to :html
 
+    before_filter :authenticate_user, :only => [:new, :create]
+
     before_filter :find_forum
     before_filter :find_topic, :except => [:index, :new, :create]
     before_filter :build_topic, :only => [:new, :create]
 
-    def show
-#    bang_recent_activity(@topic)
-#    bang_recent_activity(@forum) 
+    def index
 
-      @posts_search = @topic.posts
-      @posts = @posts_search.includes(:user).paginate :page => params[:page], :per_page => params[:per_page] || Forum::Post.per_page
+      respond_to do |format|
+        format.html do
+          redirect_to simple_forum_forum_path(@forum), :status => :moved_permanently
+        end
+      end
+    end
+
+    def show
+      @topic.bang_recent_activity(authenticated_user)
+      @topic.increment_views_count
+
+      @posts_search = @topic.posts.includes(:user)
+      @posts = @posts_search.respond_to?(:paginate) ?
+          @posts_search.paginate(:page => params[:page], :per_page => params[:per_page] || SimpleForum::Post.per_page) :
+          @posts_search.all
 
       @post = SimpleForum::Post.new
 
@@ -30,7 +43,7 @@ module SimpleForum
         format.html do
           if success
             flash[:notice] = t('controllers.forum.topics.topic_created')
-            redirect_to forum_topic_url(@forum, @topic)
+            redirect_to simple_forum_forum_topic_url(@forum, @topic)
           else
             render :new
           end
@@ -50,7 +63,7 @@ module SimpleForum
 
     def build_topic
       @topic = @forum.topics.new params[:simple_forum_topic] do |topic|
-        topic.user = current_user
+        topic.user = authenticated_user
       end
     end
 

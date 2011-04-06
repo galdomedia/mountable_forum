@@ -11,6 +11,7 @@ class CreateSimpleForumTopics < ::ActiveRecord::Migration
       t.datetime :last_updated_at
 
       t.integer :posts_count, :default => 0
+      t.integer :views_count, :default => 0
 
       t.string :slug_cache
 

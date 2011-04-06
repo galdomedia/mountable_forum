@@ -1,0 +1,13 @@
+<%= form_for @topic, :url => simple_forum_forum_topics_path(@forum) do |f| %>
+    <p>
+      <%= f.label :title %><br/>
+      <%= f.text_field :title, :style=>'width:500px;' %>
+    </p>
+    <p>
+      <%= f.label :body %><br/>
+      <%= f.text_area :body %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>

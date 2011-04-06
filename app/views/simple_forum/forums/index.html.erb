@@ -1,16 +1,53 @@
-<ul>
-  <% (methods - Object.methods).grep(/path/).sort.each do |m| %>
-      <%= content_tag :li, m %>
+<h1>Forums:</h1>
+
+<table>
+  <tr>
+    <th colspan="2">
+      Forums
+    </th>
+    <th>
+      Topics
+    </th>
+    <th>
+      Posts
+    </th>
+    <th>
+      Last post
+    </th>
+  </tr>
+  <% @forums.each do |f| %>
+      <tr>
+        <td>
+          <% if f.recent_activity?(authenticated_user) %>
+              <%= image_tag('forumNewPosts.gif', :alt=>"New posts", :title=>"New posts") %>
+          <% else %>
+              <%= image_tag('forumNoNewPosts.gif', :alt=>"No new posts", :title=>"No new posts") %>
+          <% end %>
+        </td>
+        <td>
+          <span><%= link_to f.name, simple_forum_forum_path(f) %></span>
+          <span><%= f.body %></span>
+        </td>
+        <td>
+          <%= number_with_delimiter f.topics.size %>
+        </td>
+        <td>
+          <%= number_with_delimiter f.posts.size %>
+        </td>
+        <td>
+          <% if f.recent_post %>
+              <%= content_tag :span, :title => l(f.recent_post.created_at) do %>
+                  <%= link_to "#{time_ago_in_words(f.recent_post.created_at)} #{t('simple_forum.ago', :default => 'ago')}",
+                              simple_forum_forum_topic_path(f, f.recent_post.topic, :page => f.recent_post.topic.last_page, :anchor => "post-#{f.recent_post.id}")
+                  %>
+              <% end %>
+              <br />
+              <cite>
+                <%= t('simple_forum.by', :default => 'by') %>
+                <%= f.recent_post.user.login %>
+              </cite>
+          <% end %>
+        </td>
+      </tr>
   <% end %>
-</ul>
-<ul>
-  <% forum.methods.grep(/path/).sort.each do |m| %>
-      <%= content_tag :li, m %>
-  <% end %>
-</ul>
-
-<% @forums.each do |f| %>
-    <%= link_to f.name, 'simple_forum_forum_path(f)' %>
-
-
-<% end %>
+</table>

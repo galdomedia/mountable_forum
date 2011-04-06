@@ -5,14 +5,16 @@ module SimpleForum
     before_filter :find_forum, :except => [:index]
 
     def index
-      @forums = SimpleForum::Forum.default_order.all
+      @forums = SimpleForum::Forum.default_order.includes({:recent_post => [:user, :topic]})
 
       respond_with(@forums)
     end
 
     def show
-#    bang_recent_activity(@forum)
-      @topics = @forum.topics.paginate :page => params[:page], :per_page => params[:per_page]
+      @forum.bang_recent_activity(authenticated_user)
+
+      scope = @forum.topics.includes([:user, {:recent_post => :user}])
+      @topics = scope.respond_to?(:paginate) ? scope.paginate(:page => params[:page], :per_page => params[:per_page]) : scope.all
 
       respond_to :html
     end
