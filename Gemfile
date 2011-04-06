@@ -7,10 +7,10 @@ gem "rack", :git => "git://github.com/rack/rack.git"
 
 gem "sqlite3"
 
-group :development, :test do
+#group :development, :test do
   gem "capybara", ">= 0.4.0"
   gem "rspec-rails", ">= 2.0.0.beta"
   gem "factory_girl"
-end
+#end
 
 gemspec
