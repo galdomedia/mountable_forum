@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe SimpleForum::ForumsController do
+  include Devise::TestHelpers
   render_views
 
-  subject {
-    Factory(:forum)
-  }
+  before(:all) do
+    @forum = Factory(:forum)
+  end
 
   before(:each) do
-    Factory(:forum)
   end
 
   describe "GET 'index'" do
@@ -21,7 +21,7 @@ describe SimpleForum::ForumsController do
 
   describe "GET 'show'" do
     it "should be successful" do
-      get :show, :id => subject.to_param
+      get :show, :id => @forum.to_param
       response.should be_success
       response.should render_template('show')
     end

@@ -14,7 +14,7 @@ module SimpleForum
 
       respond_to do |format|
         format.html do
-          redirect_to simple_forum_forum_path(@forum), :status => :moved_permanently
+          redirect_to simple_forum_forum_url(@forum), :status => :moved_permanently
         end
       end
     end
@@ -47,6 +47,7 @@ module SimpleForum
             flash[:notice] = t('controllers.forum.topics.topic_created')
             redirect_to simple_forum_forum_topic_url(@forum, @topic)
           else
+            flash.now[:alert] = @topic.errors.full_messages.join(' ')
             render :new
           end
         end

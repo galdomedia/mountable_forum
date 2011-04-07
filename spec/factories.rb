@@ -22,5 +22,7 @@ Factory.define :post, :class => SimpleForum::Post do |f|
 end
 
 Factory.define :user do |f|
-  f.login "SAfsdf"
+  f.sequence(:email) { |n| "email_#{n}@examlpe-email.com" }
+  f.password "password"
+  f.password_confirmation { |m| m.password }
 end

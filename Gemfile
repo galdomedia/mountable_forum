@@ -5,6 +5,8 @@ gem "rails", :git => "git://github.com/rails/rails.git"
 gem "arel", :git => "git://github.com/rails/arel.git"
 gem "rack", :git => "git://github.com/rack/rack.git"
 
+gem "devise"
+
 gem "sqlite3"
 
 #group :development, :test do

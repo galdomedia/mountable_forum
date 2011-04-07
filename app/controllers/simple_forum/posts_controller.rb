@@ -12,7 +12,7 @@ module SimpleForum
 
       respond_to do |format|
         format.html do
-          redirect_to simple_forum_forum_topic_path(@forum, @topic), :status => :moved_permanently
+          redirect_to simple_forum_forum_topic_url(@forum, @topic), :status => :moved_permanently
         end
       end
     end
@@ -33,7 +33,7 @@ module SimpleForum
             redirect_to simple_forum_forum_topic_url(@forum, @topic, :page => @post.on_page, :anchor => "post-#{@post.id}"),
                         :notice => t('simple_forum.controllers.posts.post_created')
           else
-            redirect_to simple_forum_forum_topic_url(@form, @topic, :page => @topic.last_page, :anchor => (@topic.recent_post ? "post-#{@topic.recent_post.id}" : nil)),
+            redirect_to simple_forum_forum_topic_url(@forum, @topic, :page => @topic.last_page, :anchor => (@topic.recent_post ? "post-#{@topic.recent_post.id}" : nil)),
                         :alert => @post.errors.full_messages.join(', ')
           end
         end

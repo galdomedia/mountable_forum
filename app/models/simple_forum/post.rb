@@ -29,6 +29,7 @@ module SimpleForum
 
     attr_accessible :body
     validates :topic, :forum, :user, :presence => true
+    validates :body, :presence => true
 
     validate :topic_must_not_be_closed, :on => :create
 

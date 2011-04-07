@@ -1,7 +1,10 @@
 Dummy::Application.routes.draw do
 
-#  mount SimpleForum::Engine, :at => "/forum", :as => "forum"
+  root :to => 'simple_forum/forums#index', :via => :get
 
+  devise_for :users
+
+#  mount SimpleForum::Engine, :at => "/forum", :as => "forum"
 
 
 end

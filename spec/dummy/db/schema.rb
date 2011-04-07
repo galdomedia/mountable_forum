@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110407115321) do
+ActiveRecord::Schema.define(:version => 20110407135530) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -101,7 +101,8 @@ ActiveRecord::Schema.define(:version => 20110407115321) do
   add_index "simple_forum_topics", ["user_id"], :name => "index_simple_forum_topics_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "login"
+    t.string   "email",                             :default => "", :null => false
+    t.string   "encrypted_password", :limit => 128, :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
