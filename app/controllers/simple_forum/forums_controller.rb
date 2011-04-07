@@ -5,7 +5,7 @@ module SimpleForum
     before_filter :find_forum, :except => [:index]
 
     def index
-      @categories = SimpleForum::Category.default_order.includes({:forums => {:recent_post => [:user, :topic]}})
+      @categories = SimpleForum::Category.default_order.includes({:forums => [{:recent_post => [:user, :topic]}, :moderators]})
 
       respond_to :html
     end

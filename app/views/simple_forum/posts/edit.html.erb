@@ -1,0 +1,10 @@
+<%= form_for @post, :url => simple_forum_forum_topic_post_path(@forum, @topic, @post), :as => :post, :html => {:id => 'new_post_form'} do |f| -%>
+    <p>
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>

@@ -2,4 +2,15 @@
 
 rake ralties:create_symlinks
 
+
+moderator can:
+  - close/open topics
+  - edit posts
+  - delete(mark as deleted) posts
+
+signed in user can:
+  - create posts
+  - edit own posts(in specified period of time)
+  - delete(mark as deleted) own posts(in specified period of time)
+
 This project rocks and uses MIT-LICENSE.

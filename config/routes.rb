@@ -27,7 +27,8 @@ Rails.application.routes.draw do
 
     resources :forums, :only => [:index, :show], :path => 'f' do
       resources :topics, :only => [:index, :show, :new, :create], :path => 't' do
-        resources :posts, :only => [:index, :show, :new, :create], :path => 'p' do
+        resources :posts, :path => 'p' do
+          delete :delete, :on => :member
         end
       end
     end

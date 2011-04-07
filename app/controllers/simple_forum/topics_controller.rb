@@ -21,7 +21,7 @@ module SimpleForum
       @topic.bang_recent_activity(authenticated_user)
       @topic.increment_views_count
 
-      @posts_search = @topic.posts.includes(:user)
+      @posts_search = @topic.posts.includes([:user, :deleted_by, :edited_by])
       @posts = @posts_search.respond_to?(:paginate) ?
           @posts_search.paginate(:page => params[:page], :per_page => params[:per_page] || SimpleForum::Post.per_page) :
           @posts_search.all

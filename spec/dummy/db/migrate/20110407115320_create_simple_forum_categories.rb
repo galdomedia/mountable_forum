@@ -3,7 +3,7 @@ class CreateSimpleForumCategories < ::ActiveRecord::Migration
     create_table :simple_forum_categories do |t|
       t.string :name
       t.text :body
-      t.integer :position
+      t.integer :position, :default => 0
 
       t.string :slug_cache
 

@@ -39,8 +39,14 @@
               <% end %>
             </td>
             <td>
-              <span><%= link_to f.name, simple_forum_forum_path(f) %></span>
-              <span><%= f.body %></span>
+              <span><%= link_to f.name, simple_forum_forum_path(f) %></span><br/>
+              <span><%= f.body %></span><br/>
+              <span>
+                (
+                <%= t('.moderated_by') %>:
+                <%= f.moderators.map { |m| m.login }.join(', ').html_safe %>
+                )
+              </span>
             </td>
             <td>
               <%= number_with_delimiter f.topics.size %>

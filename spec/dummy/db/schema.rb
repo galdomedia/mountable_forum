@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110407090944) do
+ActiveRecord::Schema.define(:version => 20110407115321) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20110407090944) do
   create_table "simple_forum_categories", :force => true do |t|
     t.string   "name"
     t.text     "body"
-    t.integer  "position"
+    t.integer  "position",   :default => 0
     t.string   "slug_cache"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -50,17 +50,32 @@ ActiveRecord::Schema.define(:version => 20110407090944) do
   add_index "simple_forum_forums", ["category_id"], :name => "index_simple_forum_forums_on_category_id"
   add_index "simple_forum_forums", ["slug_cache"], :name => "index_simple_forum_forums_on_slug_cache"
 
+  create_table "simple_forum_moderatorships", :force => true do |t|
+    t.integer  "forum_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "simple_forum_moderatorships", ["forum_id"], :name => "index_simple_forum_moderatorships_on_forum_id"
+  add_index "simple_forum_moderatorships", ["user_id"], :name => "index_simple_forum_moderatorships_on_user_id"
+
   create_table "simple_forum_posts", :force => true do |t|
     t.integer  "topic_id"
     t.integer  "forum_id"
     t.integer  "user_id"
     t.text     "body"
-    t.boolean  "is_deleted"
+    t.integer  "deleted_by_id"
+    t.datetime "deleted_at"
+    t.integer  "edited_by_id"
+    t.datetime "edited_at"
     t.string   "slug_cache"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "simple_forum_posts", ["deleted_by_id"], :name => "index_simple_forum_posts_on_deleted_by_id"
+  add_index "simple_forum_posts", ["edited_by_id"], :name => "index_simple_forum_posts_on_edited_by_id"
   add_index "simple_forum_posts", ["forum_id"], :name => "index_simple_forum_posts_on_forum_id"
   add_index "simple_forum_posts", ["slug_cache"], :name => "index_simple_forum_posts_on_slug_cache"
   add_index "simple_forum_posts", ["topic_id"], :name => "index_simple_forum_posts_on_topic_id"

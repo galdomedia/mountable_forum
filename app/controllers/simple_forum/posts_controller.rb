@@ -38,20 +38,60 @@ module SimpleForum
       end
     end
 
-    def preview
-      @post = SimpleForum::Post.new(params[:post]) do |post|
-        post.user = authenticated_user
-        post.created_at, post.updated_at = Time.now
-      end
+#    def preview
+#      @post = SimpleForum::Post.new(params[:post]) do |post|
+#        post.user = authenticated_user
+#        post.created_at, post.updated_at = Time.now
+#      end
+#
+#      respond_with(@post) do |format|
+#        format.js { render :layout => false }
+#        format.html { render :layout => 'simple' }
+#      end
+#    end
 
-      respond_with(@post) do |format|
-        format.js { render :layout => false }
-        format.html { render :layout => 'simple' }
+    def edit
+
+      respond_to do |format|
+        format.html do
+          if @post.editable_by?(authenticated_user)
+            render
+          else
+            redirect_to :back, :alert => "You can't edit this post!"
+          end
+        end
       end
     end
 
-    def destroy
+    def update
+      @post.edited_by = authenticated_user
+      @post.edited_at = Time.now
+      success = @post.editable_by?(authenticated_user) && @post.update_attributes(params[:post])
 
+      respond_to do |format|
+        format.html do
+          if success
+            redirect_to simple_forum_forum_topic_url(@forum, @topic, :page => @post.on_page, :anchor => "post-#{@post.id}"),
+                        :notice => t('simple_forum.controllers.posts.post_created')
+          else
+            redirect_to :back, :alert => @post.errors.present? ? @post.errors.full_messages.join(', ') : "You can't edit this post!"
+          end
+        end
+      end
+    end
+
+    def delete
+      success = @post.mark_as_deleted_by(authenticated_user)
+
+      respond_to do |format|
+        format.html do
+          if success
+            redirect_to :back, :notice => "Post deleted"
+          else
+            redirect_to :back, :alert => "You can't delete this post!"
+          end
+        end
+      end
     end
 
     private
@@ -65,7 +105,7 @@ module SimpleForum
     end
 
     def find_post
-      @topic.posts.find params[:id]
+      @post = @topic.posts.find params[:id]
     end
 
     def build_post

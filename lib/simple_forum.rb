@@ -31,6 +31,12 @@ module SimpleForum
   mattr_accessor :layout
   @@layout = "simple_forum"
 
+  mattr_accessor :minutes_for_edit_post
+  @@minutes_for_edit_post = 15
+
+  mattr_accessor :minutes_for_delete_post
+  @@minutes_for_delete_post = 15
+
   # Yield self on setup for nice config blocks
   def self.setup
     yield self

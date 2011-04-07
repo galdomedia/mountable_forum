@@ -27,11 +27,11 @@
               </td>
               <td>
                 <% if user_authenticated? %>
-                    <% if post.editable_by?(authenticated_user) %>
-                        <%#= link_to "Edit", edit_simple_forum_forum_topic_post_path(@forum, @topic, post) %>
+                    <% if post.editable_by?(authenticated_user, @forum.moderated_by?(authenticated_user)) %>
+                        <%= link_to t('.edit'), edit_simple_forum_forum_topic_post_path(@forum, @topic, post) %>
                     <% end %>
-                    <% if post.destroyable_by?(authenticated_user) %>
-                        <%#= link_to "Usuń", simple_forum_forum_topic_post_path(@forum, @topic, post), :method => :delete, :confirm => "Are you sure?" %>
+                    <% if post.deletable_by?(authenticated_user, @forum.moderated_by?(authenticated_user)) %>
+                        <%= link_to t('.delete'), delete_simple_forum_forum_topic_post_path(@forum, @topic, post), :method => :delete, :confirm => "Are you sure?" %>
                     <% end %>
                     <% if @topic.is_open? %>
                         <%= link_to "Cite", "#", :onclick => "$('#new_post_form textarea').val('[quote=\"#{post.user.login}\"]\\n#{escape_javascript(post.body)}\\n[/quote]'); return false;" %>
@@ -42,8 +42,29 @@
             <tr>
               <td colspan="2">
                 <div class="postbody">
-                  <%= post.output %>
+                  <% if post.is_deleted? %>
+                      <%= t('.post_deleted') %>
+                      <% if post.deleted_by %>
+                          <%= t('.by') %>
+                          <%= post.deleted_by.login %>
+                      <% end %>
+                      <%= t('.at') %>
+                      <%= l post.deleted_at %>
+                  <% else %>
+                      <%= post.output %>
+                  <% end %>
                 </div>
+                <% if !post.is_deleted? && post.is_edited? %>
+                    <span>
+                      <%= t('.post_edited') %>
+                      <% if post.edited_by %>
+                          <%= t('.by') %>
+                          <%= post.edited_by.login %>
+                      <% end %>
+                      <%= t('.at') %>
+                      <%= l post.edited_at %>
+                    </span>
+                <% end %>
               </td>
             </tr>
           </table>
@@ -67,7 +88,8 @@
             </p>
         <% end %>
     <% else %>
-        You have to be logged in to create posts.
+        <%= t('.you_have_to_be_signed_in_to_create_post', :default => 'You have to be signed in to create posts') %>
+        .
     <% end %>
 <% else %>
     <p>

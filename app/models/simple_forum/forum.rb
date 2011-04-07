@@ -23,6 +23,13 @@ module SimpleForum
     belongs_to :category,
                :class_name => 'SimpleForum::Category'
 
+    has_many :moderatorships,
+             :class_name => 'SimpleForum::Moderatorship'
+
+    has_many :moderators,
+             :through => :moderatorships,
+             :source => :user
+
     scope :default_order, order("#{quoted_table_name}.position ASC")
 
     validates :name, :presence => true
@@ -44,6 +51,16 @@ module SimpleForum
 
     def bang_recent_activity(user)
       SimpleForum::UserActivity.new(user).bang(self)
+    end
+
+    def moderated_by?(user)
+      return false unless user
+      @moderated_by_cache ||= {}
+      if @moderated_by_cache.has_key?(user.id)
+        @moderated_by_cache[user.id]
+      else
+        @moderated_by_cache[user.id] = moderators.include?(user)
+      end
     end
 
   end

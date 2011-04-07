@@ -7,7 +7,10 @@ class CreateSimpleForumPosts < ::ActiveRecord::Migration
 
       t.text :body
 
-      t.boolean :is_deleted
+      t.references :deleted_by
+      t.datetime :deleted_at
+      t.references :edited_by
+      t.datetime :edited_at
 
       t.string :slug_cache
 
@@ -17,6 +20,8 @@ class CreateSimpleForumPosts < ::ActiveRecord::Migration
     add_index :simple_forum_posts, :topic_id
     add_index :simple_forum_posts, :forum_id
     add_index :simple_forum_posts, :user_id
+    add_index :simple_forum_posts, :deleted_by_id
+    add_index :simple_forum_posts, :edited_by_id
     add_index :simple_forum_posts, :slug_cache
   end
 

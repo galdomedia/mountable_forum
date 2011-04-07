@@ -3,7 +3,14 @@ module SimpleForum
 
     set_table_name 'simple_forum_posts' #should work table_name_prefix in SimpleForum module but it's not!'
 
-    belongs_to :user, :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+    belongs_to :user,
+               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+
+    belongs_to :edited_by,
+               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+
+    belongs_to :deleted_by,
+               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
 
     belongs_to :topic,
                :counter_cache => true,
@@ -18,13 +25,7 @@ module SimpleForum
     after_create :update_cached_fields
     after_destroy :update_cached_fields
 
-#    after_create lambda { |p| p.forum.set_recent_post(p) }
-#    after_destroy lambda { |p| p.forum.set_recent_post(p.topic.recent_post) unless p.topic.frozen? }
-#
-#    after_create lambda { |p| p.forum.set_recent_topic_if_needed(p.reload.topic) }
-#    after_destroy lambda { |p| p.forum.set_recent_topic_if_needed(p.forum.topics.first) }
-
-    scope :recent, order("#{SimpleForum::Post.quoted_table_name}.created_at DESC")
+    scope :recent, order("#{quoted_table_name}.created_at DESC")
 
     attr_accessible :body
     validates :topic, :forum, :user, :presence => true
@@ -52,12 +53,37 @@ module SimpleForum
       HTML::FullSanitizer.new.sanitize(output.gsub(/\<fieldset\>\<legend\>.*\<\/legend\>\<blockquote\>(.|\n)*\<\/blockquote\>/, ''))
     end
 
-    def editable_by?(user)
-      created_at < 15.minutes.ago && user == self.user
+    def editable_by?(user, is_moderator=false)
+      return false if is_deleted?
+      is_moderator = forum.is_moderator?(user) if is_moderator.nil?
+      return true if is_moderator
+      created_at > SimpleForum.minutes_for_edit_post.minutes.ago && user == self.user
     end
 
-    def destroyable_by?(user)
-      user == self.user
+    def deletable_by?(user, is_moderator=false)
+      return false if is_deleted?
+      is_moderator = forum.is_moderator?(user) if is_moderator.nil?
+      return true if is_moderator
+      created_at > SimpleForum.minutes_for_delete_post.minutes.ago && user == self.user
+    end
+
+    def is_deleted
+      !!deleted_at
+    end
+
+    alias_method :is_deleted?, :is_deleted
+
+    def is_edited
+      !!edited_at
+    end
+
+    alias_method :is_edited?, :is_edited
+
+    def mark_as_deleted_by(user)
+      return false unless deletable_by?(user, nil)
+      self.deleted_at = Time.now
+      self.deleted_by = user
+      self.save
     end
 
     protected
