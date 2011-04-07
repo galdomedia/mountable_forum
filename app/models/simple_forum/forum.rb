@@ -20,15 +20,13 @@ module SimpleForum
     belongs_to :recent_post,
                :class_name => 'SimpleForum::Post'
 
-#    has_many :activity_memories, :as => :memoryable, :class_name => 'Forum::ActivityMemory' do
-#      def for_user(user)
-#        where(:user_id => user).first
-#      end
-#    end
+    belongs_to :category,
+               :class_name => 'SimpleForum::Category'
 
-    scope :default_order, order("#{SimpleForum::Forum.quoted_table_name}.position ASC")
+    scope :default_order, order("#{quoted_table_name}.position ASC")
 
     validates :name, :presence => true
+    validates :position, :presence => true, :numericality => {:only_integer => true, :allow_nil => true}
 
     attr_accessible :name, :body, :parent_id, :position
 

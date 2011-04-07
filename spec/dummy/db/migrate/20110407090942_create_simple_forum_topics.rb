@@ -21,7 +21,6 @@ class CreateSimpleForumTopics < ::ActiveRecord::Migration
     add_index :simple_forum_topics, :forum_id
     add_index :simple_forum_topics, :user_id
     add_index :simple_forum_topics, :last_updated_at
-    add_index :simple_forum_topics, :posts_count
     add_index :simple_forum_topics, :slug_cache
   end
 

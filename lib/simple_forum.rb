@@ -28,6 +28,9 @@ module SimpleForum
   mattr_accessor :route_namespace
   @@route_namespace = "forum"
 
+  mattr_accessor :layout
+  @@layout = "simple_forum"
+
   # Yield self on setup for nice config blocks
   def self.setup
     yield self

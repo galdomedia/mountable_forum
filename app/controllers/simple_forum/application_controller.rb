@@ -1,9 +1,8 @@
 module SimpleForum
   class ApplicationController < ::ActionController::Base
-
     protect_from_forgery
 
-    layout "simple_forum"
+    layout SimpleForum.layout
 
     helper_method :authenticated_user, :user_authenticated?
 

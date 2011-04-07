@@ -1,3 +1,5 @@
 = SimpleForum
 
+rake ralties:create_symlinks
+
 This project rocks and uses MIT-LICENSE.

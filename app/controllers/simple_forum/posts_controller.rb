@@ -29,7 +29,7 @@ module SimpleForum
         format.html do
           if success
             redirect_to simple_forum_forum_topic_url(@forum, @topic, :page => @post.on_page, :anchor => "post-#{@post.id}"),
-                        :notice => t('controllers.forum.posts.post_created')
+                        :notice => t('simple_forum.controllers.posts.post_created')
           else
             redirect_to simple_forum_forum_topic_url(@form, @topic, :page => @topic.last_page, :anchor => (@topic.recent_post ? "post-#{@topic.recent_post.id}" : nil)),
                         :alert => @post.errors.full_messages.join(', ')

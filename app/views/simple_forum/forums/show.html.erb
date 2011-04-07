@@ -73,5 +73,5 @@
 <%= will_paginate @topics if respond_to?(:will_paginate) %>
 
 <p>
-  <%= link_to "Nowy topic", new_simple_forum_forum_topic_path(@forum) if @forum.is_topicable? && user_authenticated? %>
+  <%= link_to "New topic", new_simple_forum_forum_topic_path(@forum) if @forum.is_topicable? && user_authenticated? %>
 </p>

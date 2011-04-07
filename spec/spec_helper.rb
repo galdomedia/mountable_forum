@@ -19,7 +19,7 @@ Capybara.default_selector = :css
 
 # Run any available migrations
 FileUtils.rm(Dir[File.expand_path("../dummy/db/test.sqlite3", __FILE__)])
-FileUtils.rm(Dir[File.expand_path("../dummy/db/migrate/*.simple_forum.rb", __FILE__)])
+FileUtils.rm(Dir[File.expand_path("../dummy/db/migrate/*_simple_forum_*.rb", __FILE__)])
 FileUtils.mkdir_p(File.expand_path("../dummy/db/migrate/", __FILE__))
 ActiveRecord::Migration.copy File.expand_path("../dummy/db/migrate/", __FILE__), { :simple_forum => File.expand_path("../../db/migrate/", __FILE__) }
 ActiveRecord::Migrator.migrate File.expand_path("../dummy/db/migrate/", __FILE__)
