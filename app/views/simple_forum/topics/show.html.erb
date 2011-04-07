@@ -1,5 +1,15 @@
 <h1><%= @topic.title %></h1>
 
+<% if user_authenticated? && @forum.is_moderator?(authenticated_user) %>
+    <div>
+      <% if @topic.is_open? %>
+          <%= link_to t('.close_topic'), close_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+      <% else %>
+          <%= link_to t('.open_topic'), open_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+      <% end %>
+    </div>
+<% end %>
+
 <table>
   <% for post in @posts do -%>
       <tr id="<%= "post-#{post.id}" %>">

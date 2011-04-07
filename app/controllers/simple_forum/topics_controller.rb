@@ -2,11 +2,13 @@ module SimpleForum
   class TopicsController < ApplicationController
     respond_to :html
 
-    before_filter :authenticate_user, :only => [:new, :create]
+    before_filter :authenticate_user, :only => [:new, :create, :open, :close]
 
     before_filter :find_forum
     before_filter :find_topic, :except => [:index, :new, :create]
     before_filter :build_topic, :only => [:new, :create]
+
+    before_filter :moderator_required, :only => [:open, :close]
 
     def index
 
@@ -51,6 +53,44 @@ module SimpleForum
       end
     end
 
+    def open
+      success = if @topic.is_open?
+                  false
+                else
+                  @topic.open!
+                  true
+                end
+
+      respond_to do |format|
+        format.html do
+          if success
+            redirect_to :back, :notice => "Topic is open now."
+          else
+            redirect_to :back, :alert => "Topic already opened."
+          end
+        end
+      end
+    end
+
+    def close
+      success = if @topic.is_open?
+                  @topic.close!
+                  true
+                else
+                  false
+                end
+
+      respond_to do |format|
+        format.html do
+          if success
+            redirect_to :back, :notice => "Topic is close now."
+          else
+            redirect_to :back, :alert => "Topic already closed."
+          end
+        end
+      end
+    end
+
     private
 
     def find_forum
@@ -65,6 +105,10 @@ module SimpleForum
       @topic = @forum.topics.new params[:simple_forum_topic] do |topic|
         topic.user = authenticated_user
       end
+    end
+
+    def moderator_required
+      redirect_to :back, :alert => "You can't do that!" unless @forum.moderated_by?(authenticated_user)
     end
 
   end

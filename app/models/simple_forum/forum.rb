@@ -63,5 +63,7 @@ module SimpleForum
       end
     end
 
+    alias_method :is_moderator?, :moderated_by?
+
   end
 end
