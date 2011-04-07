@@ -36,27 +36,21 @@ describe SimpleForum::PostsController do
 
     describe "POST 'create'" do
       describe "with valid params" do
-        before(:each) do
+        it "should redirect to topic last page with post anchor and set flash[:notice]" do
           post :create, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :post => Factory.attributes_for(:post)
-        end
-        it "should set flash[:notice]" do
           flash[:notice].should_not be_blank
           flash[:alert].should be_blank
-        end
-        it "should redirect to topic last page with post anchor" do
           response.should redirect_to(simple_forum_forum_topic_path(@forum, @topic, :page => assigns(:post).on_page, :anchor => "post-#{assigns(:post).id}"))
         end
       end
       describe "with invalid params" do
         before(:each) do
           @topic.reload
-          post :create, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :post => Factory.attributes_for(:post).inject({}) { |h, (k, v)| h[k] = nil; h }
         end
-        it "should set flash[:alert]" do
+        it "should redirect to topic last page with recent post anchor and set flash[:alert]" do
+          post :create, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :post => Factory.attributes_for(:post).inject({}) { |h, (k, v)| h[k] = nil; h }
           flash[:notice].should be_blank
           flash[:alert].should_not be_blank
-        end
-        it "should redirect to topic last page with recent post anchor" do
           response.should redirect_to(simple_forum_forum_topic_url(@forum, @topic, :page => @topic.last_page, :anchor => (@topic.recent_post ? "post-#{@topic.recent_post.id}" : nil)))
         end
       end

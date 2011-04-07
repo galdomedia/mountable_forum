@@ -11,7 +11,7 @@ describe SimpleForum::TopicsController do
   end
 
   before(:each) do
-
+    @back_url = request.env['HTTP_REFERER'] = "http://back.pl"
   end
 
   describe "GET 'index'" do
@@ -36,7 +36,7 @@ describe SimpleForum::TopicsController do
 
     describe "GET 'new'" do
       it "should be successful" do
-        get :new, :forum_id => @forum
+        get :new, :forum_id => @forum.to_param
         response.should be_success
         response.should render_template('new')
       end
@@ -57,7 +57,29 @@ describe SimpleForum::TopicsController do
         end
       end
     end
-  end
 
+    context "who is forum moderator" do
+      before(:each) do
+        @forum.moderators = [@user]
+      end
+
+      context "for open topic" do
+        before(:each) do
+          @topic.open!
+        end
+
+        describe "POST 'close'" do
+          it "should redirect back and should set flash[:notice]" do
+            post :close, :forum_id => @forum.to_param, :id => @topic.to_param
+            response.should redirect_to(@back_url)
+            flash[:notice].should_not be_blank
+            flash[:alert].should be_blank
+          end
+        end
+      end
+
+    end
+
+  end
 
 end
