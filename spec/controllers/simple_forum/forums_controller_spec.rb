@@ -3,10 +3,12 @@ require 'spec_helper'
 describe SimpleForum::ForumsController do
   render_views
 
-  subject { Factory(:forum) }
+  subject {
+    Factory(:forum)
+  }
 
   before(:each) do
-
+    Factory(:forum)
   end
 
   describe "GET 'index'" do

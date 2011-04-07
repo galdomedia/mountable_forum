@@ -102,7 +102,7 @@ module SimpleForum
     end
 
     def build_topic
-      @topic = @forum.topics.new params[:simple_forum_topic] do |topic|
+      @topic = @forum.topics.new params[:topic] do |topic|
         topic.user = authenticated_user
       end
     end

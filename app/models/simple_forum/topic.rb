@@ -22,7 +22,7 @@ module SimpleForum
 
 
     validates :title, :forum, :presence => true
-    validates :user, :presence => true
+    validates :user, :presence => true, :on => :create
     validates :body, :presence => true, :on => :create
 
     before_validation :set_default_attributes, :on => :create

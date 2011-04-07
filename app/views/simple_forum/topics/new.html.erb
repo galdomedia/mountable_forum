@@ -1,4 +1,4 @@
-<%= form_for @topic, :url => simple_forum_forum_topics_path(@forum) do |f| %>
+<%= form_for @topic, :as => :topic, :url => simple_forum_forum_topics_path(@forum) do |f| %>
     <p>
       <%= f.label :title %><br/>
       <%= f.text_field :title, :style=>'width:500px;' %>

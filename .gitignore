@@ -5,3 +5,6 @@ pkg/
 spec/dummy/db/*.sqlite3
 spec/dummy/log/*.log
 spec/dummy/tmp/
+
+spec/dummy/file_store/simple_forum_activity
+spec/dummy/db/migrate/*_create_simple_*.rb
