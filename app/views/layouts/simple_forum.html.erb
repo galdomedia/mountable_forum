@@ -11,7 +11,7 @@
 <div class="container">
   <% if flash.present? %>
       <div id="flash_messages">
-        <% flash.each_pair do |key, val| %>
+        <% flash.each do |key, val| %>
             <%= content_tag :div, val, :class => key %>
         <% end %>
       </div>

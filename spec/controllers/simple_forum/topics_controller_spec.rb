@@ -62,24 +62,51 @@ describe SimpleForum::TopicsController do
       before(:each) do
         @forum.moderators = [@user]
       end
-
-      context "for open topic" do
-        before(:each) do
-          @topic.open!
+      {:close => :open, :open => :close}.each do |action, state|
+        context "for #{state} topic" do
+          before(:each) do
+            @topic.send("#{state}!")
+          end
+          describe "POST '#{action}'" do
+            it "should redirect back and should set flash[:notice]" do
+              post action, :forum_id => @forum.to_param, :id => @topic.to_param
+              response.should redirect_to(@back_url)
+              flash[:notice].should_not be_blank
+              flash[:alert].should be_blank
+            end
+          end
         end
 
-        describe "POST 'close'" do
-          it "should redirect back and should set flash[:notice]" do
-            post :close, :forum_id => @forum.to_param, :id => @topic.to_param
-            response.should redirect_to(@back_url)
-            flash[:notice].should_not be_blank
-            flash[:alert].should be_blank
+        context "for #{action} topic" do
+          before(:each) do
+            @topic.send("#{action}!")
+          end
+          describe "POST '#{action}'" do
+            it "should redirect back and should set flash[:alert]" do
+              post action, :forum_id => @forum.to_param, :id => @topic.to_param
+              response.should redirect_to(@back_url)
+              flash[:notice].should be_blank
+              flash[:alert].should_not be_blank
+            end
           end
         end
       end
-
     end
-
+    context "who is not forum moderator" do
+      before(:each) do
+        @forum.moderators = []
+      end
+      [:close, :open].each do |action|
+        describe "POST '#{action}'" do
+          it "should redirect back and should set flash[:alert]" do
+            post action, :forum_id => @forum.to_param, :id => @topic.to_param
+            response.should redirect_to(@back_url)
+            flash[:notice].should be_blank
+            flash[:alert].should_not be_blank
+          end
+        end
+      end
+    end
   end
 
 end
