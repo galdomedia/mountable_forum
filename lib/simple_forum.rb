@@ -31,6 +31,9 @@ module SimpleForum
   mattr_accessor :layout
   @@layout = "simple_forum"
 
+  mattr_accessor :root_application_name
+  @@root_application_name = "Application"
+
   mattr_accessor :minutes_for_edit_post
   @@minutes_for_edit_post = 15
 

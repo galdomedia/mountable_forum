@@ -1,10 +1,14 @@
-<h1><%= t('.title') %>:</h1>
+<div id="breadcrumbs">
+  <%= link_to SimpleForum.root_application_name, root_path %>
+  &gt;
+  <%= 'Forum' %>
+</div>
 
 <% @categories.each do |c| %>
-    <div>
-      <h4>
+    <div class="category">
+      <h3>
         <%= c.name %>
-      </h4>
+      </h3>
       <% if c.body.present? %>
           <div>
             <%= c.body %>
@@ -12,7 +16,7 @@
       <% end %>
     </div>
 
-    <table>
+    <table class="forums forum-table">
       <tr>
         <th colspan="2">
           <%= t('.forums') %>
@@ -29,14 +33,14 @@
       </tr>
       <% c.forums.each do |f| %>
           <tr>
-            <td>
+            <td class="icon-cell">
               <% if f.recent_activity?(authenticated_user) %>
                   <%= image_tag('forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
               <% else %>
                   <%= image_tag('forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
               <% end %>
             </td>
-            <td>
+            <td class="forum-cell">
               <span><%= link_to f.name, simple_forum_forum_path(f) %></span><br/>
               <span><%= f.body %></span><br/>
               <span>
@@ -46,13 +50,13 @@
                 )
               </span>
             </td>
-            <td>
+            <td class="topics-cell">
               <%= number_with_delimiter f.topics.size %>
             </td>
-            <td>
+            <td class="posts-cell">
               <%= number_with_delimiter f.posts.size %>
             </td>
-            <td>
+            <td class="last-post-cell">
               <% if f.recent_post %>
                   <%= content_tag :span, :title => l(f.recent_post.created_at) do %>
                       <%= link_to "#{time_ago_in_words(f.recent_post.created_at)} #{t('simple_forum.ago', :default => 'ago')}",

@@ -1,19 +1,31 @@
-<h1><%= @topic.title %></h1>
+<div id="breadcrumbs">
+  <%= link_to SimpleForum.root_application_name, root_path %>
+  &gt;
+  <%= link_to 'Forum', simple_forum_root_path %>
+  &gt;
+  <%= link_to @forum.name, simple_forum_forum_path(@forum) %>
+  &gt;
+  <%= @topic.title %>
+</div>
 
-<% if user_authenticated? && @forum.is_moderator?(authenticated_user) %>
-    <div>
-      <% if @topic.is_open? %>
-          <%= link_to t('.close_topic'), close_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
-      <% else %>
-          <%= link_to t('.open_topic'), open_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+<% content_for :left_sidebar do %>
+    <ul>
+      <% if user_authenticated? && @forum.is_moderator?(authenticated_user) %>
+          <li>
+            <% if @topic.is_open? %>
+                <%= link_to t('.close_topic'), close_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+            <% else %>
+                <%= link_to t('.open_topic'), open_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+            <% end %>
+          </li>
       <% end %>
-    </div>
+    </ul>
 <% end %>
 
-<table>
+<table class="topic-table forum-table" cellpadding="6" cellspacing="6">
   <% for post in @posts do -%>
       <tr id="<%= "post-#{post.id}" %>">
-        <td>
+        <td class="user-cell">
           <span class="name">
             <strong><%= post.user.login %></strong>
           </span>
@@ -30,15 +42,15 @@
         </td>
         <td>
           <span style="display: none;"><a name="<%= post.id %>"></a></span>
-          <table>
-            <tr>
-              <td>
+          <table class="user-post" cellpadding="6" cellspacing="6" style="width: 100%;">
+            <tr class="post-header">
+              <td style="width: 40%;">
                 <%= t('.post_sent') %>:
                 <%= l post.created_at %>
                 /
                 <%= "#{time_ago_in_words(post.created_at)} #{t('simple_forum.ago', :default => 'ago')}" %>
               </td>
-              <td>
+              <td class="actions">
                 <% if user_authenticated? %>
                     <% if post.editable_by?(authenticated_user, @forum.moderated_by?(authenticated_user)) %>
                         <%= link_to t('.edit'), edit_simple_forum_forum_topic_post_path(@forum, @topic, post) %>

@@ -17,6 +17,7 @@ pl:
 
       show:
         forum: "Forum"
+        topics: "Wątki"
         replies: "Odpowiedzi"
         views: "Wyświetleń"
         last_post: "Ostatni post"
@@ -36,6 +37,11 @@ pl:
         cite: "Cytuj"
 
       new:
+        new_topic: "Nowy wątek"
+
+    posts:
+      edit:
+        post_edit: "Edycja postu"
 
     controllers:
       you_are_not_permitted_to_perform_this_action: "Nie posiadasz wymaganych uprawnień aby wykonać tą akcję"

@@ -91,6 +91,9 @@ module SimpleForum
 
     def update_cached_fields
       topic.update_cached_post_fields(self) if topic
+      if user && user.respond_to?(:forum_posts_count)
+        user.class.update_all({:forum_posts_count => SimpleForum::Post.where(:user_id => user.id).count}, {:id => user.id})
+      end
     end
 
     def set_forum_id

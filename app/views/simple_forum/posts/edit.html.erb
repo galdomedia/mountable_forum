@@ -1,3 +1,15 @@
+<div id="breadcrumbs">
+  <%= link_to SimpleForum.root_application_name, root_path %>
+  &gt;
+  <%= link_to 'Forum', simple_forum_root_path %>
+  &gt;
+  <%= link_to @forum.name, simple_forum_forum_path(@forum) %>
+  &gt;
+  <%= link_to @topic.title, simple_forum_forum_topic_path(@forum, @topic) %>
+  &gt;
+  <%= t('.post_edit') %>
+</div>
+
 <%= form_for @post, :url => simple_forum_forum_topic_post_path(@forum, @topic, @post), :as => :post, :html => {:id => 'new_post_form'} do |f| -%>
     <p>
       <%= f.label :body %>

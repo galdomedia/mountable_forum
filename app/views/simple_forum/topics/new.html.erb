@@ -1,3 +1,13 @@
+<div id="breadcrumbs">
+  <%= link_to SimpleForum.root_application_name, root_path %>
+  &gt;
+  <%= link_to 'Forum', simple_forum_root_path %>
+  &gt;
+  <%= link_to @forum.name, simple_forum_forum_path(@forum) %>
+  &gt;
+  <%= t('.new_topic') %>
+</div>
+
 <%= form_for @topic, :as => :topic, :url => simple_forum_forum_topics_path(@forum) do |f| %>
     <p>
       <%= f.label :title %><br/>

@@ -1,12 +1,26 @@
-<h1>
-  <%= t('.forum') %>:
+<div id="breadcrumbs">
+  <%= link_to SimpleForum.root_application_name, root_path %>
+  &gt;
+  <%= link_to 'Forum', simple_forum_root_path %>
+  &gt;
   <%= @forum.name %>
-</h1>
+</div>
 
-<table>
+<% content_for :left_sidebar do %>
+    <ul>
+
+      <% if @forum.is_topicable? && user_authenticated? %>
+          <li>
+            <%= link_to t(".new_topic"), new_simple_forum_forum_topic_path(@forum) %>
+          </li>
+      <% end %>
+    </ul>
+<% end %>
+
+<table class="forum forum-table">
   <tr>
     <th colspan="2">
-      <%= t('.forums') %>
+      <%= t('.topics') %>
     </th>
     <th>
       <%= t('.replies') %>
@@ -20,21 +34,15 @@
   </tr>
   <% @topics.each do |t| %>
       <tr>
-        <td>
+        <td class="icon-cell">
           <% if t.recent_activity?(authenticated_user) %>
               <%= image_tag('forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
           <% else %>
               <%= image_tag('forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
           <% end %>
         </td>
-        <td>
+        <td class="topic-cell">
           <span><%= link_to t.title, simple_forum_forum_topic_path(@forum, t) %></span>
-          <span>
-            <% if t.user %>
-              <%= t("simple_forum.by") %>
-                <%= t.user.login %>
-            <% end %>
-          </span>
           <% if t.paged? %>
             <span>
               <ul>
@@ -48,14 +56,22 @@
               </ul>
             </span>
           <% end %>
+          <br/>
+          <span>
+            <% if t.user %>
+              <%= t("simple_forum.by") %>
+                <%= t.user.login %>
+            <% end %>
+          </span>
+
         </td>
-        <td>
+        <td class="posts-cell">
           <%= number_with_delimiter t.posts.size %>
         </td>
-        <td>
+        <td class="topics-cell views-cell">
           <%= number_with_delimiter t.views_count %>
         </td>
-        <td>
+        <td class="last-post-cell">
           <% if t.recent_post %>
               <%= content_tag :span, :title => l(t.recent_post.created_at) do %>
                   <%= link_to "#{time_ago_in_words(t.recent_post.created_at)} #{t('simple_forum.ago', :default => 'ago')}",
@@ -74,7 +90,3 @@
 </table>
 
 <%= will_paginate @topics if respond_to?(:will_paginate) %>
-
-<p>
-  <%= link_to t(".new_topic"), new_simple_forum_forum_topic_path(@forum) if @forum.is_topicable? && user_authenticated? %>
-</p>
