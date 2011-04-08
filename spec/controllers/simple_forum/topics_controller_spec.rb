@@ -60,11 +60,13 @@ describe SimpleForum::TopicsController do
 
     context "who is forum moderator" do
       before(:each) do
+        @forum.reload
         @forum.moderators = [@user]
       end
       {:close => :open, :open => :close}.each do |action, state|
         context "for #{state} topic" do
           before(:each) do
+            @topic.reload
             @topic.send("#{state}!")
           end
           describe "POST '#{action}'" do
@@ -79,6 +81,7 @@ describe SimpleForum::TopicsController do
 
         context "for #{action} topic" do
           before(:each) do
+            @topic.reload
             @topic.send("#{action}!")
           end
           describe "POST '#{action}'" do
@@ -94,6 +97,7 @@ describe SimpleForum::TopicsController do
     end
     context "who is not forum moderator" do
       before(:each) do
+        @forum.reload
         @forum.moderators = []
       end
       [:close, :open].each do |action|

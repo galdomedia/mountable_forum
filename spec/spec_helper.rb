@@ -1,7 +1,7 @@
 # Configure Rails Envinronment
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require "rails/test_help"
 require "rspec/rails"
 require "factories"
@@ -14,14 +14,14 @@ Rails.backtrace_cleaner.remove_silencers!
 
 # Configure capybara for integration testing
 require "capybara/rails"
-Capybara.default_driver   = :rack_test
+Capybara.default_driver = :rack_test
 Capybara.default_selector = :css
 
 # Run any available migrations
 FileUtils.rm(Dir[File.expand_path("../dummy/db/test.sqlite3", __FILE__)])
 FileUtils.rm(Dir[File.expand_path("../dummy/db/migrate/*_simple_forum_*.rb", __FILE__)])
 FileUtils.mkdir_p(File.expand_path("../dummy/db/migrate/", __FILE__))
-ActiveRecord::Migration.copy File.expand_path("../dummy/db/migrate/", __FILE__), { :simple_forum => File.expand_path("../../db/migrate/", __FILE__) }
+ActiveRecord::Migration.copy File.expand_path("../dummy/db/migrate/", __FILE__), {:simple_forum => File.expand_path("../../db/migrate/", __FILE__)}
 ActiveRecord::Migrator.migrate File.expand_path("../dummy/db/migrate/", __FILE__)
 
 # Load support files
@@ -34,6 +34,7 @@ RSpec.configure do |config|
   config.include RSpec::Matchers
   include Rails.application.routes.mounted_helpers
 
+  config.use_transactional_fixtures = true
 
   # == Mock Framework
   config.mock_with :rspec

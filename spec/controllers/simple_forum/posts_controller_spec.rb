@@ -111,6 +111,56 @@ describe SimpleForum::PostsController do
         end
       end
     end
+
+    describe "DELETE 'delete'" do
+      context "with id own post posted less than #{SimpleForum.minutes_for_delete_post} minutes ago" do
+        it "should redirect back and set flash[:notice]" do
+          delete :delete, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @post.to_param
+          flash[:notice].should_not be_blank
+          flash[:alert].should be_blank
+          response.should redirect_to(@back_url)
+        end
+      end
+      context "with id own post posted more than #{SimpleForum.minutes_for_delete_post} minutes ago" do
+        before(:each) do
+          @old_post = Factory(:post, :topic => @topic, :user => @user, :created_at => Time.now - (SimpleForum.minutes_for_delete_post.minutes + 10.minutes))
+        end
+        it "should redirect back and set flash['alert']" do
+          delete :delete, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @old_post.to_param
+          flash[:notice].should be_blank
+          flash[:alert].should_not be_blank
+          response.should redirect_to(@back_url)
+        end
+      end
+
+      context "with id another user's post posted less than #{SimpleForum.minutes_for_delete_post} minutes ago" do
+        before(:each) do
+          sign_in(Factory(:user))
+        end
+        it "should redirect back and set flash[:alert]" do
+          delete :delete, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @post.to_param
+          flash[:notice].should be_blank
+          flash[:alert].should_not be_blank
+          response.should redirect_to(@back_url)
+        end
+      end
+
+      context "with id another user's post when signed in as forum moderator" do
+        before(:each) do
+          @forum.reload
+          @moderator = Factory(:user)
+          @forum.moderators = [@moderator]
+          sign_in(@moderator)
+        end
+        it "should redirect back and set flash[:notice]" do
+          delete :delete, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @post.to_param
+          flash[:notice].should_not be_blank
+          flash[:alert].should be_blank
+          response.should redirect_to(@back_url)
+        end
+      end
+    end
+
   end
 
 end

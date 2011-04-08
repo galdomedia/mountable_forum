@@ -77,7 +77,7 @@ module SimpleForum
 
 
     def delete
-      success = @post.mark_as_deleted_by(authenticated_user)
+      success = @post.mark_as_deleted_by(authenticated_user) #check if post is deletable by authenticated_user in mark_as_deleted_by method
 
       respond_to do |format|
         format.html do
