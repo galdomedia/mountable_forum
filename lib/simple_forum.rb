@@ -1,4 +1,6 @@
 require 'abstract_auth'
+require 'bb-ruby'
+require 'bb-ruby/bb-ruby'
 
 module SimpleForum
 

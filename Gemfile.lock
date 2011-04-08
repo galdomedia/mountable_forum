@@ -63,6 +63,7 @@ PATH
   specs:
     simple_forum (0.0.1)
       abstract_auth
+      bb-ruby
       will_paginate (~> 3.0.pre2)
 
 GEM
@@ -71,6 +72,7 @@ GEM
     abstract_auth (0.1.3)
       module_ext (~> 0.1.1)
     ansi (1.2.2)
+    bb-ruby (0.9.5)
     bcrypt-ruby (2.1.4)
     builder (3.0.0)
     capybara (0.4.1.2)

@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "abstract_auth"
   s.add_dependency "will_paginate", "~> 3.0.pre2"
-
+  s.add_dependency "bb-ruby"
 end

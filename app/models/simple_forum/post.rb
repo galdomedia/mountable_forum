@@ -47,7 +47,7 @@ module SimpleForum
     end
 
     def output
-      body.respond_to?(:bbcode_to_html) ? body.bbcode_to_html : body
+      body.bbcode_to_html
     end
 
     def output_without_tags
