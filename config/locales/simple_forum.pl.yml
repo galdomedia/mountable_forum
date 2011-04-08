@@ -38,6 +38,7 @@ pl:
         cite: "Cytuj"
         post_deleted: "Post usunięty"
         post_edited: "Post ostatnio edytowany"
+        preview: "Podgląd"
 
       new:
         new_topic: "Nowy wątek"

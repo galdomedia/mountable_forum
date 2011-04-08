@@ -45,7 +45,7 @@ module SimpleForum
       @post.created_at, @post.updated_at = Time.now
 
       respond_to do |format|
-        format.js { render :partial => 'simple_forum/topics/post', :locals => {:post => @post} }
+        format.js { render :partial => 'simple_forum/topics/post', :locals => {:post => @post, :preview => true} }
       end
     end
 

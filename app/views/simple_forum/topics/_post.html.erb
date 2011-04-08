@@ -1,4 +1,4 @@
-<tr id="<%= "post-#{post.id}" %>">
+<tr id="<%= "post-#{post.id}" %>" class="<%= local_assigns[:preview] ? 'preview' : nil %>">
   <td class="user-cell">
           <span class="name">
             <strong><%= post.user.login %></strong>
