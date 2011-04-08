@@ -68,28 +68,30 @@
               <td colspan="2">
                 <div class="postbody">
                   <% if post.is_deleted? %>
-                      <%= t('.post_deleted') %>
-                      <% if post.deleted_by %>
-                          <%= t('.by') %>
-                          <%= post.deleted_by.login %>
-                      <% end %>
-                      <%= t('.at') %>
-                      <%= l post.deleted_at %>
+                      <div class='post-deleted'>
+                        <%= t('.post_deleted') %>
+                        <% if post.deleted_by %>
+                            <%= t('simple_forum.by') %>
+                            <%= post.deleted_by.login %>
+                        <% end %>
+                        <%= t('simple_forum.at') %>
+                        <%= l post.deleted_at %>
+                      </div>
                   <% else %>
                       <%= post.output %>
                   <% end %>
+                  <% if !post.is_deleted? && post.is_edited? %>
+                      <div class="post-edited">
+                        <%= t('.post_edited') %>
+                        <% if post.edited_by %>
+                            <%= t('simple_forum.by') %>
+                            <%= post.edited_by.login %>
+                        <% end %>
+                        <%= t('simple_forum.at') %>
+                        <%= l post.edited_at %>
+                      </div>
+                  <% end %>
                 </div>
-                <% if !post.is_deleted? && post.is_edited? %>
-                    <span>
-                      <%= t('.post_edited') %>
-                      <% if post.edited_by %>
-                          <%= t('.by') %>
-                          <%= post.edited_by.login %>
-                      <% end %>
-                      <%= t('.at') %>
-                      <%= l post.edited_at %>
-                    </span>
-                <% end %>
               </td>
             </tr>
           </table>

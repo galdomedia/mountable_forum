@@ -111,3 +111,14 @@ table.topic-table td.user-cell {
 #flash_messages .alert {
     color: red;
 }
+
+div.postbody div.post-deleted {
+    font-size: 16px;
+    color: #6495ed;
+}
+
+div.postbody div.post-edited {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #556b2f;
+}
