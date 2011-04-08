@@ -1,6 +1,26 @@
 = SimpleForum
 
-rake ralties:create_symlinks
+### Instalation
+
+Make sure you have model representing user. Default is User class. You can change this.
+
+Add simple_forum to your Rails 3 Gemfile
+
+    gem "simple_forum", :git => "git@github.com:galdomedia/mountable_forum.git"
+
+    bundle install
+
+Install the initializer
+
+    rails g simple_forum:install
+
+Edit the initializer located in `config/initializers/simple_forum.rb` to satisfy your needs.
+
+Copy assets & migrations
+    rake simple_forum_engine:install
+
+Run migrations
+    rake db:migrate
 
 
 moderator can:
