@@ -7,5 +7,9 @@ module SimpleForum
     initializer "static assets" do |app|
       app.middleware.use ::ActionDispatch::Static, "#{root}/public"
     end
+
+    rake_tasks do
+      load "simple_forum/tasks/railties.rake"
+    end
   end
 end
