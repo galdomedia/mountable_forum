@@ -1,0 +1,101 @@
+pl:
+  simple_forum:
+    by: "przez"
+    ago: "temu"
+    new_posts_present: "Nowe posty"
+    new_posts_absent: "Brak nowych postów"
+    are_you_sure: "Jesteś pewien?"
+
+    forums:
+      index:
+        title: "Fora"
+        forums: "Fora"
+        topics: "Tematy"
+        posts: "Posty"
+        last_post: "Ostatni post"
+        moderated_by: "Moderowane przez"
+
+      show:
+        forum: "Forum"
+        replies: "Odpowiedzi"
+        views: "Wyświetleń"
+        last_post: "Ostatni post"
+        new_topic: "Nowy temat"
+
+    topics:
+      show:
+        topic_is_closed: "Wątek jest zamknięty!"
+        you_have_to_be_signed_in_to_create_post: "Musisz być zalogowany aby tworzyć nowe posty"
+        user_joined: "Dołączył"
+        post_sent: "Wysłano"
+        close_topic: "Zamkniej wątek"
+        open_topic: "Otwórz wątek"
+        user_posts_count: "Posty"
+        edit: "Edytuj"
+        delete: "Usuń"
+        cite: "Cytuj"
+
+      new:
+
+    controllers:
+      you_are_not_permitted_to_perform_this_action: "Nie posiadasz wymaganych uprawnień aby wykonać tą akcję"
+
+      topics:
+        topic_opened: "Temat został otwarty"
+        topic_already_opened: "Temat już jest otwarty"
+        topic_closed: "Temat został zamknięty"
+        topic_already_closed: "Temat już jest zamknięty"
+        topic_created: "Temat został utworzony"
+
+      posts:
+        post_created: "Post został utworzony"
+        post_updated: "Post został zaktualizowany"
+        post_deleted: "Post został usunięty"
+        post_cant_be_deleted: "Nie możesz usunąć tego posta"
+        post_cant_be_edited: "Nie możesz edytować tego posta"
+
+    validations:
+      forum_must_be_topicable: "Na tym forum nie można tworzyć nowych wątków"
+
+  activerecord:
+    models:
+      simple_forum:
+        forum: "Forum"
+        topic: "Temat"
+        post: "Post"
+        category: "Kategoria"
+
+    attributes:
+      simlpe_forum/forum:
+        name: "Nazwa"
+        body: "Opis"
+        is_topicable: "Można tworzyć nowe wątki?"
+        position: "Pozycja"
+        topics_count: "Liczba tematów"
+        posts_count: "Liczba postów"
+
+
+      simple_forum/topic:
+        title: "Temat"
+        body: "Treść posta"
+        forum: "Forum"
+        forum_id: "Forum"
+        user: "Użytkownik"
+        is_closed: "Zamknięty?"
+        posts_count: "Liczba postów"
+        views_count: "Liczba wyświetleń"
+
+      simple_forum/post:
+        body: "Treść"
+        topic: "Temat"
+        topic_id: "Temat"
+        forum: "Forum"
+        forum_id: "Forum"
+        user: "Użytkownik"
+        user_id: "Użytkownik"
+        deleted_by: "Usunięty przez"
+        deleted_by_id: "Usunięty przez"
+        deleted_at: "Usunięty"
+        edited_by: "Edytowany przez"
+        edited_by_id: "Edytowany przez"
+        edited_at: "Edytowany"

@@ -24,6 +24,11 @@ module SimpleForum
     validates :title, :forum, :presence => true
     validates :user, :presence => true, :on => :create
     validates :body, :presence => true, :on => :create
+    validate :forum_must_be_topicable, :on => :create
+
+    def forum_must_be_topicable
+      errors.add(:base, t('simple_forum.validations.forum_must_be_topicable')) if forum && !forum.is_topicable?
+    end
 
     before_validation :set_default_attributes, :on => :create
     after_create :create_initial_post

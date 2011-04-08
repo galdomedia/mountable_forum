@@ -1,6 +1,4 @@
-<h1>Forums:</h1>
-
-
+<h1><%= t('.title') %>:</h1>
 
 <% @categories.each do |c| %>
     <div>
@@ -33,9 +31,9 @@
           <tr>
             <td>
               <% if f.recent_activity?(authenticated_user) %>
-                  <%= image_tag('forumNewPosts.gif', :alt=>"New posts", :title=>"New posts") %>
+                  <%= image_tag('forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
               <% else %>
-                  <%= image_tag('forumNoNewPosts.gif', :alt=>"No new posts", :title=>"No new posts") %>
+                  <%= image_tag('forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
               <% end %>
             </td>
             <td>

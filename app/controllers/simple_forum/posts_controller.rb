@@ -67,7 +67,7 @@ module SimpleForum
         format.html do
           if success
             redirect_to simple_forum_forum_topic_url(@forum, @topic, :page => @post.on_page, :anchor => "post-#{@post.id}"),
-                        :notice => t('simple_forum.controllers.posts.post_created')
+                        :notice => t('simple_forum.controllers.posts.post_updated')
           else
             redirect_to :back, :alert => @post.errors.full_messages.join(', ')
           end
@@ -82,9 +82,9 @@ module SimpleForum
       respond_to do |format|
         format.html do
           if success
-            redirect_to :back, :notice => "Post deleted"
+            redirect_to :back, :notice => t('simple_forum.controllers.posts.post_deleted')
           else
-            redirect_to :back, :alert => "You can't delete this post!"
+            redirect_to :back, :alert => t('simple_forum.controllers.posts.post_cant_be_deleted')
           end
         end
       end
@@ -111,7 +111,7 @@ module SimpleForum
     end
 
     def post_must_be_editable_by_authenticate_user
-      redirect_to :back, :alert => "You can't edit this post!" unless @post.editable_by?(authenticated_user, nil)
+      redirect_to :back, :alert => t('simple_forum.controllers.posts.post_cant_be_edited') unless @post.editable_by?(authenticated_user, nil)
     end
 
   end

@@ -1,5 +1,5 @@
 module SimpleForum
-  class ApplicationController < ::ActionController::Base
+  class ApplicationController < ::ApplicationController #::ActionController::Base
     protect_from_forgery
 
     layout SimpleForum.layout
@@ -18,7 +18,6 @@ module SimpleForum
 
     def authenticate_user
       redirect_to :back, :alert => "You have to be logged in" unless user_authenticated?
-#      authenticate_user!
     end
   end
 

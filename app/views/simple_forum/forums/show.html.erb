@@ -1,27 +1,30 @@
-<h1>Forum: <%= @forum.name %></h1>
+<h1>
+  <%= t('.forum') %>:
+  <%= @forum.name %>
+</h1>
 
 <table>
   <tr>
     <th colspan="2">
-      Forums
+      <%= t('.forums') %>
     </th>
     <th>
-      Replies
+      <%= t('.replies') %>
     </th>
     <th>
-      Views
+      <%= t('.views') %>
     </th>
     <th>
-      Last post
+      <%= t('.last_post') %>
     </th>
   </tr>
   <% @topics.each do |t| %>
       <tr>
         <td>
           <% if t.recent_activity?(authenticated_user) %>
-              <%= image_tag('forumNewPosts.gif', :alt=>"New posts", :title=>"New posts") %>
+              <%= image_tag('forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
           <% else %>
-              <%= image_tag('forumNoNewPosts.gif', :alt=>"No new posts", :title=>"No new posts") %>
+              <%= image_tag('forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
           <% end %>
         </td>
         <td>
@@ -73,5 +76,5 @@
 <%= will_paginate @topics if respond_to?(:will_paginate) %>
 
 <p>
-  <%= link_to "New topic", new_simple_forum_forum_topic_path(@forum) if @forum.is_topicable? && user_authenticated? %>
+  <%= link_to t(".new_topic"), new_simple_forum_forum_topic_path(@forum) if @forum.is_topicable? && user_authenticated? %>
 </p>

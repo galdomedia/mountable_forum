@@ -44,7 +44,7 @@ module SimpleForum
       respond_to do |format|
         format.html do
           if success
-            flash[:notice] = t('controllers.forum.topics.topic_created')
+            flash[:notice] = t('simple_forum.controllers.topics.topic_created')
             redirect_to simple_forum_forum_topic_url(@forum, @topic)
           else
             flash.now[:alert] = @topic.errors.full_messages.join(' ')
@@ -65,9 +65,9 @@ module SimpleForum
       respond_to do |format|
         format.html do
           if success
-            redirect_to :back, :notice => "Topic is open now."
+            redirect_to :back, :notice => t('simple_forum.controllers.topics.topic_opened')
           else
-            redirect_to :back, :alert => "Topic already opened."
+            redirect_to :back, :alert => t('simple_forum.controllers.topics.topic_already_opened')
           end
         end
       end
@@ -84,9 +84,9 @@ module SimpleForum
       respond_to do |format|
         format.html do
           if success
-            redirect_to :back, :notice => "Topic is close now."
+            redirect_to :back, :notice => t('simple_forum.controllers.topics.topic_closed')
           else
-            redirect_to :back, :alert => "Topic already closed."
+            redirect_to :back, :alert => t('simple_forum.controllers.topics.topic_already_closed')
           end
         end
       end
@@ -109,7 +109,7 @@ module SimpleForum
     end
 
     def moderator_required
-      redirect_to :back, :alert => "You can't do that!" unless @forum.moderated_by?(authenticated_user)
+      redirect_to :back, :alert => t('simple_forum.controllers.you_are_not_permitted_to_perform_this_action') unless @forum.moderated_by?(authenticated_user)
     end
 
   end

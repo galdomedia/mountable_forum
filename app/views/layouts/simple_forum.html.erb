@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
 <head>
   <meta charset="UTF-8">
   <title><%= yield(:title) || '' %></title>
+  <%= javascript_include_tag('https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js') %>
+  <%= javascript_include_tag('rails') %>
   <%= csrf_meta_tag %>
 </head>
 <body>
