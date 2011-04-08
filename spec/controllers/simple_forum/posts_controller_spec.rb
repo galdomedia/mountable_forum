@@ -161,6 +161,14 @@ describe SimpleForum::PostsController do
       end
     end
 
+    describe "GET 'preview'" do
+      it "should respond with success" do
+        request.accept = "text/javascript"
+        get :preview, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :post => {:body => 'sdfdsf'}
+        response.should be_success
+      end
+    end
+
   end
 
 end

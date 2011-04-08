@@ -47,7 +47,7 @@ module SimpleForum
     end
 
     def output
-      body.bbcode_to_html
+      body.to_s.bbcode_to_html
     end
 
     def output_without_tags
@@ -55,6 +55,7 @@ module SimpleForum
     end
 
     def editable_by?(user, is_moderator=false)
+      return false if new_record?
       return false if is_deleted?
       is_moderator = forum.is_moderator?(user) if is_moderator.nil?
       return true if is_moderator
@@ -62,6 +63,7 @@ module SimpleForum
     end
 
     def deletable_by?(user, is_moderator=false)
+      return false if new_record?
       return false if is_deleted?
       is_moderator = forum.is_moderator?(user) if is_moderator.nil?
       return true if is_moderator

@@ -5,8 +5,8 @@ module SimpleForum
 
     before_filter :find_forum
     before_filter :find_topic
-    before_filter :find_post, :except => [:index, :new, :create]
-    before_filter :build_post, :only => [:new, :create]
+    before_filter :find_post, :except => [:index, :new, :create, :preview]
+    before_filter :build_post, :only => [:new, :create, :preview]
     before_filter :post_must_be_editable_by_authenticate_user, :only => [:edit, :update]
 
     def index
@@ -41,17 +41,13 @@ module SimpleForum
       end
     end
 
-#    def preview
-#      @post = SimpleForum::Post.new(params[:post]) do |post|
-#        post.user = authenticated_user
-#        post.created_at, post.updated_at = Time.now
-#      end
-#
-#      respond_with(@post) do |format|
-#        format.js { render :layout => false }
-#        format.html { render :layout => 'simple' }
-#      end
-#    end
+    def preview
+      @post.created_at, @post.updated_at = Time.now
+
+      respond_to do |format|
+        format.js { render :partial => 'simple_forum/topics/post', :locals => {:post => @post} }
+      end
+    end
 
     def edit
 

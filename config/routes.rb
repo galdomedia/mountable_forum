@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
         resources :posts, :except => [:destroy], :path => 'p' do
           delete :delete, :on => :member
+          get :preview, :on => :collection
         end
       end
     end

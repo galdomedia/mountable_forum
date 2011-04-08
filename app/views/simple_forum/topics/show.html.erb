@@ -24,79 +24,7 @@
 
 <table class="topic-table forum-table" cellpadding="6" cellspacing="6">
   <% for post in @posts do -%>
-      <tr id="<%= "post-#{post.id}" %>">
-        <td class="user-cell">
-          <span class="name">
-            <strong><%= post.user.login %></strong>
-          </span>
-          <br/>
-          <span class="postdetails">
-            <%= t('.user_joined') %>:
-            <%= l post.user.created_at.to_date %>
-            <br/>
-            <% if post.user.respond_to?(:forum_posts_count) %>
-              <%= t('.user_posts_count') %>:
-                <%= number_with_delimiter post.user.forum_posts_count %>
-            <% end %>
-          </span>
-        </td>
-        <td>
-          <span style="display: none;"><a name="<%= post.id %>"></a></span>
-          <table class="user-post" cellpadding="6" cellspacing="6" style="width: 100%;">
-            <tr class="post-header">
-              <td style="width: 40%;">
-                <%= t('.post_sent') %>:
-                <%= l post.created_at %>
-                /
-                <%= "#{time_ago_in_words(post.created_at)} #{t('simple_forum.ago', :default => 'ago')}" %>
-              </td>
-              <td class="actions">
-                <% if user_authenticated? %>
-                    <% if post.editable_by?(authenticated_user, @forum.moderated_by?(authenticated_user)) %>
-                        <%= link_to t('.edit'), edit_simple_forum_forum_topic_post_path(@forum, @topic, post) %>
-                    <% end %>
-                    <% if post.deletable_by?(authenticated_user, @forum.moderated_by?(authenticated_user)) %>
-                        <%= link_to t('.delete'), delete_simple_forum_forum_topic_post_path(@forum, @topic, post), :method => :delete, :confirm => t('simple_forum.are_you_sure') %>
-                    <% end %>
-                    <% if @topic.is_open? %>
-                        <%= link_to t('.cite'), "#", :onclick => "$('#new_post_form textarea').val('[quote=\"#{post.user.login}\"]\\n#{escape_javascript(post.body)}\\n[/quote]'); return false;" %>
-                    <% end %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <div class="postbody">
-                  <% if post.is_deleted? %>
-                      <div class='post-deleted'>
-                        <%= t('.post_deleted') %>
-                        <% if post.deleted_by %>
-                            <%= t('simple_forum.by') %>
-                            <%= post.deleted_by.login %>
-                        <% end %>
-                        <%= t('simple_forum.at') %>
-                        <%= l post.deleted_at %>
-                      </div>
-                  <% else %>
-                      <%= post.output %>
-                  <% end %>
-                  <% if !post.is_deleted? && post.is_edited? %>
-                      <div class="post-edited">
-                        <%= t('.post_edited') %>
-                        <% if post.edited_by %>
-                            <%= t('simple_forum.by') %>
-                            <%= post.edited_by.login %>
-                        <% end %>
-                        <%= t('simple_forum.at') %>
-                        <%= l post.edited_at %>
-                      </div>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <%= render :partial => 'post', :locals => {:post => post} %>
   <% end %>
 </table>
 
@@ -113,7 +41,28 @@
             <p>
               <%= f.submit %>
             </p>
+
+            <p>
+              <%= link_to t('.preview'), '#', :id => 'preview_post' %>
+            </p>
         <% end %>
+
+
+        <script type="text/javascript">
+            $(function() {
+                $('#preview_post').click(function() {
+                    $.ajax({
+                        type          : "GET",
+                        url           : "<%= preview_simple_forum_forum_topic_posts_path(@forum, @topic) %>",
+                        data          : $('#new_post_form').serializeArray(),
+                        success: function(data) {
+                            $('table.topic-table').append(data);
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
     <% else %>
         <%= t('.you_have_to_be_signed_in_to_create_post') %>
     <% end %>
