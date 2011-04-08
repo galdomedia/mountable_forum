@@ -36,9 +36,9 @@
       <tr>
         <td class="icon-cell">
           <% if t.recent_activity?(authenticated_user) %>
-              <%= image_tag('forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
+              <%= image_tag('/simple_forum_engine/images/forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
           <% else %>
-              <%= image_tag('forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
+              <%= image_tag('/simple_forum_engine/images/forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
           <% end %>
         </td>
         <td class="topic-cell">
