@@ -10,7 +10,7 @@ namespace :simple_forum do
       app_public_path = Rails.application.paths["public"].first
 
 
-      railtie = Rails.application.railties.all.detect { |r| r.respond_to?(railtie_name) ? r.railtie_name == 'simple_forum_engine' : r.class == SimpleForum::Engine }
+      railtie = Rails.application.railties.all.detect { |r| r.respond_to?(:railtie_name) ? r.railtie_name == 'simple_forum_engine' : r.class == SimpleForum::Engine }
 
       if railtie.respond_to?(:paths) && (path = railtie.paths["public"].first) &&
           (assets_dir = railtie.config.compiled_asset_path) && File.exist?(path)
@@ -30,7 +30,7 @@ namespace :simple_forum do
     task :migrations => :"db:load_config" do
       to_load = ['simple_forum_engine']
       railties = {}
-      railtie = Rails.application.railties.all.detect { |r| r.respond_to?(railtie_name) ? r.railtie_name == 'simple_forum_engine' : r.class == SimpleForum::Engine }
+      railtie = Rails.application.railties.all.detect { |r| r.respond_to?(:railtie_name) ? r.railtie_name == 'simple_forum_engine' : r.class == SimpleForum::Engine }
 
       if railtie.respond_to?(:paths) && (path = railtie.paths["db/migrate"].first)
         railties['simple_forum_engine'] = path
