@@ -12,7 +12,7 @@ describe SimpleForum::PostsController do
   end
 
   before(:each) do
-
+    @back_url = request.env['HTTP_REFERER'] = "http://back.pl"
   end
 
   describe "GET 'index'" do
@@ -55,7 +55,62 @@ describe SimpleForum::PostsController do
         end
       end
     end
-  end
 
+
+    describe "GET 'edit'" do
+      context "with id own post posted less than #{SimpleForum.minutes_for_edit_post} minutes ago" do
+        it "should render template 'edit'" do
+          get :edit, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @post.to_param
+          response.should render_template(:edit)
+        end
+      end
+
+      context "with id own post posted more than #{SimpleForum.minutes_for_edit_post} minutes ago" do
+        before(:each) do
+          @old_post = Factory(:post, :topic => @topic, :user => @user, :created_at => Time.now - (SimpleForum.minutes_for_edit_post.minutes + 10.minutes))
+        end
+        it "should redirect back and set flash['alert']" do
+          get :edit, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @old_post.to_param
+          flash[:notice].should be_blank
+          flash[:alert].should_not be_blank
+          response.should redirect_to(@back_url)
+        end
+      end
+
+      context "with id another user's post posted less than #{SimpleForum.minutes_for_edit_post} minutes ago" do
+        before(:each) do
+          sign_in(Factory(:user))
+        end
+        it "should redirect back and set flash['alert']" do
+          get :edit, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @post.to_param
+          flash[:notice].should be_blank
+          flash[:alert].should_not be_blank
+          response.should redirect_to(@back_url)
+        end
+      end
+
+      context "with id another user's post when signed in as forum moderator" do
+        before(:each) do
+          @moderator = Factory(:user)
+          @forum.moderators = [@moderator]
+          sign_in(@moderator)
+        end
+        it "should render template 'edit'" do
+          get :edit, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @post.to_param
+          response.should render_template(:edit)
+        end
+      end
+    end
+    describe "PUT 'update'" do
+      context "with id own post posted less than #{SimpleForum.minutes_for_edit_post} minutes ago and valid params" do
+        it "should redirect to topic last page with post anchor and set flash[:notice]" do
+          put :update, :forum_id => @forum.to_param, :topic_id => @topic.to_param, :id => @post.to_param, :post => Factory.attributes_for(:post)
+          flash[:notice].should_not be_blank
+          flash[:alert].should be_blank
+          response.should redirect_to(simple_forum_forum_topic_path(@forum, @topic, :page => assigns(:post).on_page, :anchor => "post-#{assigns(:post).id}"))
+        end
+      end
+    end
+  end
 
 end
