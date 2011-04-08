@@ -66,6 +66,11 @@ p, h2, pre {
     background-color: transparent;
 }
 
+#content .category .body {
+    width: 60%;
+    margin: 20px;
+}
+
 table.forum-table {
     width: 100%;
 }
