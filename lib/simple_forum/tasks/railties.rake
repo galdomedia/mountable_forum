@@ -33,7 +33,7 @@ namespace :simple_forum do
       railtie = Rails.application.railties.all.detect { |r| r.respond_to?(railtie_name) ? r.railtie_name == 'simple_forum_engine' : r.class == SimpleForum::Engine }
 
       if railtie.respond_to?(:paths) && (path = railtie.paths["db/migrate"].first)
-        railties[railtie.railtie_name] = path
+        railties['simple_forum_engine'] = path
       end
 
       on_skip = Proc.new do |name, migration|
