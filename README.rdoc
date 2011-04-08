@@ -19,6 +19,8 @@ Edit the initializer located in `config/initializers/simple_forum.rb` to satisfy
 Copy assets & migrations
     rake simple_forum_engine:install
 
+    or rake simple_forum:install if rake simple_forum_engine:install doesn't work(rails version < 3.1)
+
 Run migrations
     rake db:migrate
 
