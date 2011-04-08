@@ -7,23 +7,20 @@ namespace :simple_forum do
       require 'rails/generators/base'
       Rails.application.initialize!
 
-      to_load = ['simple_forum_engine']
       app_public_path = Rails.application.paths["public"].first
 
 
-      Rails.application.railties.all do |railtie|
-        next unless to_load == :all || to_load.include?(railtie.railtie_name)
+      railtie = Rails.application.railties.all.detect { |r| r.respond_to?(railtie_name) ? r.railtie_name == 'simple_forum_engine' : r.class == SimpleForum::Engine }
 
-        if railtie.respond_to?(:paths) && (path = railtie.paths["public"].first) &&
-            (assets_dir = railtie.config.compiled_asset_path) && File.exist?(path)
+      if railtie.respond_to?(:paths) && (path = railtie.paths["public"].first) &&
+          (assets_dir = railtie.config.compiled_asset_path) && File.exist?(path)
 
-          Rails::Generators::Base.source_root(path)
-          copier = Rails::Generators::Base.new
-          Dir[File.join(path, "**/*")].each do |file|
-            relative = file.gsub(/^#{path}\//, '')
-            if File.file?(file)
-              copier.copy_file relative, File.join(app_public_path, assets_dir, relative)
-            end
+        Rails::Generators::Base.source_root(path)
+        copier = Rails::Generators::Base.new
+        Dir[File.join(path, "**/*")].each do |file|
+          relative = file.gsub(/^#{path}\//, '')
+          if File.file?(file)
+            copier.copy_file relative, File.join(app_public_path, assets_dir, relative)
           end
         end
       end
@@ -33,12 +30,10 @@ namespace :simple_forum do
     task :migrations => :"db:load_config" do
       to_load = ['simple_forum_engine']
       railties = {}
-      Rails.application.railties.all do |railtie|
-        next unless to_load == :all || to_load.include?(railtie.railtie_name)
+      railtie = Rails.application.railties.all.detect { |r| r.respond_to?(railtie_name) ? r.railtie_name == 'simple_forum_engine' : r.class == SimpleForum::Engine }
 
-        if railtie.respond_to?(:paths) && (path = railtie.paths["db/migrate"].first)
-          railties[railtie.railtie_name] = path
-        end
+      if railtie.respond_to?(:paths) && (path = railtie.paths["db/migrate"].first)
+        railties[railtie.railtie_name] = path
       end
 
       on_skip = Proc.new do |name, migration|
