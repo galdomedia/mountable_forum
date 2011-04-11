@@ -78,14 +78,21 @@ pl:
         category: "Kategoria"
 
     attributes:
-      simlpe_forum/forum:
+      simple_forum/forum:
         name: "Nazwa"
         body: "Opis"
         is_topicable: "Można tworzyć nowe wątki?"
         position: "Pozycja"
         topics_count: "Liczba tematów"
         posts_count: "Liczba postów"
+        moderators: "Moderatorzy"
+        moderator_ids: "Moderatorzy"
 
+      simple_forum/category:
+        name: "Nazwa"
+        position: "Pozycja"
+        body: "Opis"
+        forums: "Fora"     
 
       simple_forum/topic:
         title: "Temat"
