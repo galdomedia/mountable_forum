@@ -28,17 +28,18 @@ pl:
       show:
         topic_is_closed: "Wątek jest zamknięty!"
         you_have_to_be_signed_in_to_create_post: "Musisz być zalogowany aby tworzyć nowe posty"
-        user_joined: "Dołączył"
-        post_sent: "Wysłano"
         close_topic: "Zamkniej wątek"
         open_topic: "Otwórz wątek"
-        user_posts_count: "Posty"
-        edit: "Edytuj"
-        delete: "Usuń"
-        cite: "Cytuj"
-        post_deleted: "Post usunięty"
-        post_edited: "Post ostatnio edytowany"
         preview: "Podgląd"
+        post:
+          edit: "Edytuj"
+          delete: "Usuń"         
+          cite: "Cytuj"
+          user_joined: "Dołączył"
+          post_sent: "Wysłano"
+          user_posts_count: "Posty"
+          post_deleted: "Post usunięty"
+          post_edited: "Post ostatnio edytowany"
 
       new:
         new_topic: "Nowy wątek"
