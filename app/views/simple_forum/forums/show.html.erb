@@ -60,7 +60,7 @@
           <span>
             <% if t.user %>
               <%= t("simple_forum.by") %>
-                <%= t.user.login %>
+                <%= t.user.name %>
             <% end %>
           </span>
 
@@ -81,7 +81,7 @@
               <br/>
               <cite>
                 <%= t('simple_forum.by', :default => 'by') %>
-                <%= t.recent_post.user.login %>
+                <%= t.recent_post.user.name %>
               </cite>
           <% end %>
         </td>

@@ -1,7 +1,7 @@
 <tr id="<%= "post-#{post.id}" %>" class="<%= local_assigns[:preview] ? 'preview' : nil %>">
   <td class="user-cell">
           <span class="name">
-            <strong><%= post.user.login %></strong>
+            <strong><%= post.user.name %></strong>
           </span>
     <br/>
           <span class="postdetails">
@@ -33,7 +33,7 @@
                   <%= link_to t('.delete'), delete_simple_forum_forum_topic_post_path(@forum, @topic, post), :method => :delete, :confirm => t('simple_forum.are_you_sure') %>
               <% end %>
               <% if @topic.is_open? %>
-                  <%= link_to t('.cite'), "#", :onclick => "$('#new_post_form textarea').val('[quote=\"#{post.user.login}\"]\\n#{escape_javascript(post.body)}\\n[/quote]'); return false;" %>
+                  <%= link_to t('.cite'), "#", :onclick => "$('#new_post_form textarea').val('[quote=\"#{post.user.name}\"]\\n#{escape_javascript(post.body)}\\n[/quote]'); return false;" %>
               <% end %>
           <% end %>
         </td>
@@ -46,7 +46,7 @@
                   <%= t('.post_deleted') %>
                   <% if post.deleted_by %>
                       <%= t('simple_forum.by') %>
-                      <%= post.deleted_by.login %>
+                      <%= post.deleted_by.name %>
                   <% end %>
                   <%= t('simple_forum.at') %>
                   <%= l post.deleted_at %>
@@ -59,7 +59,7 @@
                   <%= t('.post_edited') %>
                   <% if post.edited_by %>
                       <%= t('simple_forum.by') %>
-                      <%= post.edited_by.login %>
+                      <%= post.edited_by.name %>
                   <% end %>
                   <%= t('simple_forum.at') %>
                   <%= l post.edited_at %>

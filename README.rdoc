@@ -3,6 +3,7 @@
 ### Instalation
 
 Make sure you have model representing user. Default is User class. You can change this.
+User model must respond to 'name'.
 
 Add simple_forum to your Rails 3 Gemfile
 
