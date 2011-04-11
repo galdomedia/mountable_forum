@@ -31,15 +31,16 @@ pl:
         close_topic: "Zamkniej wątek"
         open_topic: "Otwórz wątek"
         preview: "Podgląd"
-        post:
-          edit: "Edytuj"
-          delete: "Usuń"         
-          cite: "Cytuj"
-          user_joined: "Dołączył"
-          post_sent: "Wysłano"
-          user_posts_count: "Posty"
-          post_deleted: "Post usunięty"
-          post_edited: "Post ostatnio edytowany"
+      
+      posts:
+        edit: "Edytuj"
+        delete: "Usuń"         
+        cite: "Cytuj"
+        user_joined: "Dołączył"
+        post_sent: "Wysłano"
+        user_posts_count: "Posty"
+        post_deleted: "Post usunięty"
+        post_edited: "Post ostatnio edytowany"
 
       new:
         new_topic: "Nowy wątek"
