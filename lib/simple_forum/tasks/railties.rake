@@ -1,4 +1,4 @@
-#delete this file when Rails 3.1 will be released!
+#TODO delete this file when Rails 3.1 will be released!
 require 'active_record/migration'
 
 namespace :simple_forum do

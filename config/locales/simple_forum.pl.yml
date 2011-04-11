@@ -30,8 +30,7 @@ pl:
         you_have_to_be_signed_in_to_create_post: "Musisz być zalogowany aby tworzyć nowe posty"
         close_topic: "Zamkniej wątek"
         open_topic: "Otwórz wątek"
-        preview: "Podgląd"
-      
+       
       post:
         edit: "Edytuj"
         delete: "Usuń"         
@@ -87,6 +86,8 @@ pl:
         posts_count: "Liczba postów"
         moderators: "Moderatorzy"
         moderator_ids: "Moderatorzy"
+        category: "Kategoria"
+        category_id: "Kategoria"
 
       simple_forum/category:
         name: "Nazwa"

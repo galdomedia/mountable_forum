@@ -36,4 +36,8 @@ signed in user can:
   - edit own posts(in specified period of time)
   - delete(mark as deleted) own posts(in specified period of time)
 
+When you are using friendly_id forums and topics will be automatically using it.
+If not to_param method return something like "#{id}-#{name.parameterize}".
+
+
 This project rocks and uses MIT-LICENSE.
