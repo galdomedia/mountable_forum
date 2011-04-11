@@ -32,7 +32,7 @@ pl:
         open_topic: "Otwórz wątek"
         preview: "Podgląd"
       
-      posts:
+      post:
         edit: "Edytuj"
         delete: "Usuń"         
         cite: "Cytuj"
