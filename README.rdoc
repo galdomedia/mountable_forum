@@ -30,6 +30,9 @@ moderator can:
   - close/open topics
   - edit posts
   - delete(mark as deleted) posts
+TODO:
+  - edit topics
+  - delete topics (?)
 
 signed in user can:
   - create posts
@@ -38,6 +41,9 @@ signed in user can:
 
 When you are using friendly_id forums and topics will be automatically using it.
 If not to_param method return something like "#{id}-#{name.parameterize}".
+
+TODO:
+  - add generator or rake task to copy views to user application
 
 
 This project rocks and uses MIT-LICENSE.
