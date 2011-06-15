@@ -21,6 +21,7 @@ module BBRuby
           tags_definition.each_value do |t|
             if tags.include?(t[4])
               while text.gsub!(t[0], t[1]) do
+                #nothing
               end
             end
           end
@@ -29,13 +30,28 @@ module BBRuby
           tags_definition.each_value do |t|
             unless tags.include?(t[4])
               while text.gsub!(t[0], t[1]) do
+                #nothing
               end
             end
           end
       end
 
-      text.html_safe
+      text
     end
+
+    def to_html_with_html_safe(text, tags_alternative_definition={}, escape_html=true, method=:disable, *tags)
+      text = to_html_without_html_safe(text, tags_alternative_definition, escape_html, method, *tags)
+      text.respond_to?(:html_safe) ? text.html_safe : text
+    end
+
+    alias_method_chain :to_html, :html_safe
+
+    def to_html_with_formatting_with_html_safe(text, tags_alternative_definition={}, escape_html=true, method=:disable, *tags)
+      text = to_html_with_formatting_without_html_safe(text, tags_alternative_definition, escape_html, method, *tags)
+      text.respond_to?(:html_safe) ? text.html_safe : text
+    end
+
+    alias_method_chain :to_html_with_formatting, :html_safe
 
   end
 end
