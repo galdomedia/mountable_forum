@@ -16,6 +16,10 @@ module SimpleForum
     belongs_to :recent_post,
                :class_name => "SimpleForum::Post"
 
+    has_one :last_post,
+                :order => "#{SimpleForum::Post.table_name}.created_at DESC",
+                :class_name => "SimpleForum::Post"
+
     has_one :first_post,
             :order => "#{SimpleForum::Post.quoted_table_name}.created_at ASC",
             :class_name => "SimpleForum::Post"
@@ -39,7 +43,7 @@ module SimpleForum
     attr_accessible :title, :body
 
     def update_cached_post_fields(post)
-      if remaining_post = post.frozen? ? recent_post : post
+      if remaining_post = post.frozen? ? last_post : post
         self.class.update_all({:last_updated_at => remaining_post.created_at,
                                :recent_post_id => remaining_post.id,
                                # :posts_count => posts.size
