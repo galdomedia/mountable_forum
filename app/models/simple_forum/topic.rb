@@ -30,6 +30,8 @@ module SimpleForum
       errors.add(:base, t('simple_forum.validations.forum_must_be_topicable')) if forum && !forum.is_topicable?
     end
 
+    before_destroy :decrement_posts_counter_cache_for_forum
+
     before_validation :set_default_attributes, :on => :create
     after_create :create_initial_post
 
@@ -56,11 +58,11 @@ module SimpleForum
       @last_page ||= [(posts.size.to_f / SimpleForum::Post.per_page).ceil.to_i, 1].max
     end
 
-    #return array with page numbers
-    # topic.page_numbers => [1, 2, 3, 4] #when pages count is 4
-    # topic.page_numbers => [1, 2, 3, 4, 5] #when pages count is 5
-    # topic.page_numbers => [1, nil, 3, 4, 5, 6] #when pages count is 6
-    # topic.page_numbers => [1, nil, 4, 5, 6, 7] #when pages count is 7
+      #return array with page numbers
+      # topic.page_numbers => [1, 2, 3, 4] #when pages count is 4
+      # topic.page_numbers => [1, 2, 3, 4, 5] #when pages count is 5
+      # topic.page_numbers => [1, nil, 3, 4, 5, 6] #when pages count is 6
+      # topic.page_numbers => [1, nil, 4, 5, 6, 7] #when pages count is 7
     def page_numbers(max=5)
       if last_page > max
         [1] + [nil] + ((last_page-max+2)..last_page).to_a
@@ -108,6 +110,10 @@ module SimpleForum
     end
 
     private
+
+    def decrement_posts_counter_cache_for_forum
+      forum.class.update_counters(forum.id, :posts_count => (-1) * posts.size) if forum
+    end
 
     def set_default_attributes
       self.last_updated_at ||= Time.now
