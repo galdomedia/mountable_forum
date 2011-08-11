@@ -6,6 +6,8 @@ module SimpleForum
 
     helper_method :authenticated_user, :user_authenticated?
 
+    helper :base
+
     private
 
     def authenticated_user

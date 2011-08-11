@@ -20,7 +20,7 @@ module SimpleForum
     end
 
     def show
-      @topic.bang_recent_activity(authenticated_user)
+      bang_simple_forum_recent_activity(@topic)
       @topic.increment_views_count
 
       @posts_search = @topic.posts.includes([:user, :deleted_by, :edited_by])

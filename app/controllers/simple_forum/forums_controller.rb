@@ -11,8 +11,8 @@ module SimpleForum
     end
 
     def show
-      @forum.bang_recent_activity(authenticated_user)
-
+      bang_simple_forum_recent_activity(@forum)
+      
       scope = @forum.topics.includes([:user, {:recent_post => :user}])
       @topics = scope.respond_to?(:paginate) ? scope.paginate(:page => params[:page], :per_page => params[:per_page]) : scope.all
 
