@@ -10,8 +10,9 @@ module SimpleForum
       end
 
       def recent_activity?(object)
-        hash[object.memoryable_type.to_sym] ||= {}
-        read_at = hash[object.memoryable_type.to_sym]
+        type = object.class.base_class.name.to_sym
+        hash[type] ||= {}
+        read_at = hash[type][object.id]
         return unless read_at
 
         if object.is_a?(SimpleForum::Forum)

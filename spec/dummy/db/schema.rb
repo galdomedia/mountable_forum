@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110407135530) do
+ActiveRecord::Schema.define(:version => 20110812120157) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -99,6 +99,17 @@ ActiveRecord::Schema.define(:version => 20110407135530) do
   add_index "simple_forum_topics", ["last_updated_at"], :name => "index_simple_forum_topics_on_last_updated_at"
   add_index "simple_forum_topics", ["slug_cache"], :name => "index_simple_forum_topics_on_slug_cache"
   add_index "simple_forum_topics", ["user_id"], :name => "index_simple_forum_topics_on_user_id"
+
+  create_table "simple_forum_user_activities", :force => true do |t|
+    t.integer  "memoryable_id"
+    t.string   "memoryable_type", :limit => 50
+    t.integer  "user_id"
+    t.datetime "read_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "simple_forum_user_activities", ["user_id"], :name => "index_simple_forum_user_activities_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                             :default => "", :null => false
