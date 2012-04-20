@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simple_forum (0.0.1)
+    simple_forum (0.0.2)
       abstract_auth
       bb-ruby
       jquery-rails
