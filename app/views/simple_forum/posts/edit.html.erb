@@ -9,18 +9,18 @@
 <% end %>
 <% content_for :head do %>
     <script type="text/javascript">
-        var post_preview_path = "<%= preview_simple_forum_forum_topic_posts_path(@forum, @topic) %>";
+        var post_preview_path = "<%= simple_forum.preview_forum_topic_posts_path(@forum, @topic) %>";
     </script>
 <% end %>
 
 <div id="breadcrumbs">
   <%= link_to SimpleForum.root_application_name, root_path %>
   &gt;
-  <%= link_to 'Forum', simple_forum_root_path %>
+  <%= link_to 'Forum', simple_forum.root_path %>
   &gt;
-  <%= link_to @forum.name, simple_forum_forum_path(@forum) %>
+  <%= link_to @forum.name, simple_forum.forum_path(@forum) %>
   &gt;
-  <%= link_to @topic.title, simple_forum_forum_topic_path(@forum, @topic) %>
+  <%= link_to @topic.title, simple_forum.forum_topic_path(@forum, @topic) %>
   &gt;
   <%= t('.post_edit') %>
 </div>
@@ -29,7 +29,7 @@
 
 </table>
 
-<%= form_for @post, :url => simple_forum_forum_topic_post_path(@forum, @topic, @post), :as => :post, :html => {:id => 'new_post_form'} do |f| -%>
+<%= form_for @post, :url => simple_forum.forum_topic_post_path(@forum, @topic, @post), :as => :post, :html => {:id => 'new_post_form'} do |f| -%>
     <p>
       <%= f.label :body %>
       <%= f.text_area :body, :class => 'markitup post-body' %>

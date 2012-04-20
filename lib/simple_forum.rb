@@ -27,9 +27,9 @@ module SimpleForum
     end
   end
 
-  mattr_accessor :route_namespace
-  @@route_namespace = "forum"
-
+  #mattr_accessor :route_namespace
+  #@@route_namespace = "forum"
+  #
   mattr_accessor :layout
   @@layout = "simple_forum"
 
@@ -47,6 +47,8 @@ module SimpleForum
     yield self
   end
 
+  require File.expand_path("../../app/models/simple_forum.rb", __FILE__)
 end
 
-require 'simple_forum/engine' if defined?(Rails)
+require 'simple_forum/engine'
+

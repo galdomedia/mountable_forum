@@ -1,5 +1,6 @@
 module SimpleForum
   class ApplicationController < ::ApplicationController #::ActionController::Base
+    respond_to :html
     protect_from_forgery
 
     layout SimpleForum.layout

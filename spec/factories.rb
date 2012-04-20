@@ -1,28 +1,30 @@
-# encoding: utf-8
+require "factory_girl"
 
-Factory.define :category, :class => SimpleForum::Category do |f|
-  f.name "Name"
-end
+FactoryGirl.define do
+  factory :category, :class => SimpleForum::Category do
+    name "Name"
+  end
 
-Factory.define :forum, :class => SimpleForum::Forum do |f|
-  f.name "Name"
-  f.association :category
-end
+  factory :forum, :class => SimpleForum::Forum do
+    name "Name"
+    association :category
+  end
 
-Factory.define :topic, :class => SimpleForum::Topic do |f|
-  f.title "Name"
-  f.body "bleble"
-  f.association :forum
-  f.association :user
-end
+  factory :topic, :class => SimpleForum::Topic do
+    title "Name"
+    body "bleble"
+    association :forum
+    association :user
+  end
 
-Factory.define :post, :class => SimpleForum::Post do |f|
-  f.body "Name"
-#  f.association :user
-end
+  factory :post, :class => SimpleForum::Post do
+    body "Name"
+#  association :user
+  end
 
-Factory.define :user do |f|
-  f.sequence(:email) { |n| "email_#{n}@examlpe-email.com" }
-  f.password "password"
-  f.password_confirmation { |m| m.password }
+  factory :user do
+    sequence(:email) { |n| "email_#{n}@example.com" }
+    password "password"
+    password_confirmation { |m| m.password }
+  end
 end

@@ -1,8 +1,5 @@
 module SimpleForum
   class Moderatorship < ::ActiveRecord::Base
-
-    set_table_name 'simple_forum_moderatorships' #should work table_name_prefix in SimpleForum module but it's not!'
-
     belongs_to :forum,
                :class_name => "SimpleForum::Forum"
 

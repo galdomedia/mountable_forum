@@ -1,8 +1,5 @@
 module SimpleForum
   class Category < ::ActiveRecord::Base
-
-    set_table_name 'simple_forum_categories' #should work table_name_prefix in SimpleForum module but it's not!'
-
     has_many :forums,
              :order => "#{SimpleForum::Forum.quoted_table_name}.position ASC",
              :dependent => :nullify,

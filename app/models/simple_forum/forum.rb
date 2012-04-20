@@ -1,8 +1,5 @@
 module SimpleForum
   class Forum < ::ActiveRecord::Base
-
-    set_table_name 'simple_forum_forums' #should work table_name_prefix in SimpleForum module but it's not!'
-
     #acts_as_nested_set
 
     has_many :topics,

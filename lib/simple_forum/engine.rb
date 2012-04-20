@@ -1,15 +1,9 @@
-require "simple_forum"
-require "rails"
-
 module SimpleForum
-  class Engine < Rails::Engine
-#    isolate_namespace SimpleForum
-    initializer "static assets" do |app|
-      app.middleware.use ::ActionDispatch::Static, "#{root}/public"
-    end
+  class Engine < ::Rails::Engine
+    isolate_namespace SimpleForum
 
-    rake_tasks do
-      load "simple_forum/tasks/railties.rake"
+    initializer "simple_forum.assets_precompile" do |app|
+      app.config.assets.precompile += ['simple_forum/markitup.css', 'simple_forum/markitup.js']
     end
   end
 end
