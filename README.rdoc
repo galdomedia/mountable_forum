@@ -18,10 +18,10 @@ Install the initializer
 Edit the initializer located in `config/initializers/simple_forum.rb` to satisfy your needs.
 
 Copy migrations
-    rake simple_forum_engine:install
+    bundle exec rake simple_forum:install:migrations
     
 Run migrations
-    rake db:migrate
+    bundle exec rake db:migrate
 
 moderator can:
   - close/open topics
@@ -39,8 +39,8 @@ signed in user can:
 When you are using friendly_id forums and topics will be automatically using it.
 If not to_param method return something like "#{id}-#{name.parameterize}".
 
-TODO:
-  - add generator or rake task to copy views to user application
+You can copy and customize views to your application by running generator:
+rails g simple_forum:views
 
 
 This project rocks and uses MIT-LICENSE.
