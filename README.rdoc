@@ -6,13 +6,12 @@ Make sure you have model representing user. Default is User class. You can chang
 User model must respond to 'name'.
 
 Add simple_forum to your Rails 3 Gemfile
-
     gem "simple_forum", :git => "git@github.com:galdomedia/mountable_forum.git"
 
+And install gems with bundler
     bundle install
 
-Install the initializer
-
+Install the initializer and mount engine in routes.rb
     rails g simple_forum:install
 
 Edit the initializer located in `config/initializers/simple_forum.rb` to satisfy your needs.
@@ -24,23 +23,25 @@ Run migrations
     bundle exec rake db:migrate
 
 moderator can:
-  - close/open topics
-  - edit posts
-  - delete(mark as deleted) posts
+- close/open topics
+- edit posts
+- delete(mark as deleted) posts
+
 TODO:
-  - edit topics
-  - delete topics (?)
+- edit topics
+- delete topics (?)
 
 signed in user can:
-  - create posts
-  - edit own posts(in specified period of time)
-  - delete(mark as deleted) own posts(in specified period of time)
+- create posts
+- edit own posts(in specified period of time)
+- delete(mark as deleted) own posts(in specified period of time)
 
 When you are using friendly_id forums and topics will be automatically using it.
-If not to_param method return something like "#{id}-#{name.parameterize}".
+If not to_param method return something like:
+    "#{id}-#{name.parameterize}"
 
 You can copy and customize views to your application by running generator:
-rails g simple_forum:views
+    rails g simple_forum:views
 
 
 This project rocks and uses MIT-LICENSE.

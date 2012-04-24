@@ -1,5 +1,5 @@
 module SimpleForum
-  class PostsController < ApplicationController
+  class PostsController < ::SimpleForum::ApplicationController
 
     before_filter :authenticate_user, :except => [:index, :show]
 
