@@ -4,7 +4,7 @@ module SimpleForum
                :class_name => "SimpleForum::Forum"
 
     belongs_to :user,
-               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+               :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
 
     validates :forum, :user, :presence => true
     validates :user_id, :uniqueness => {:scope => :forum_id, :allow_nil => true}

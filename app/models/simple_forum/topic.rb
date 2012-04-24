@@ -1,6 +1,6 @@
 module SimpleForum
   class Topic < ::ActiveRecord::Base
-    belongs_to :user, :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+    belongs_to :user, :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
 
     belongs_to :forum,
                :class_name => "SimpleForum::Forum", :counter_cache => true

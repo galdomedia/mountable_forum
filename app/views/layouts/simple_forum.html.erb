@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="utf-8">
+
   <title><%= yield(:title) || '' %></title>
+
   <%= favicon_link_tag %>
 
   <%= stylesheet_link_tag "simple_forum/application" %>
@@ -20,7 +22,7 @@
 <body>
 
 <p class="logo">
-  <%= link_to image_tag('http://galdomedia.pl/images/logo.gif', :alt => 'Galdomedia'), "http://galdomedia.pl", :title => "Galdomedia" %>
+  <%= link_to image_tag('simple_forum/galdomedia-logo.png', :alt => 'GaldoMedia'), "http://galdomedia.pl", :title => "GaldoMedia" %>
 </p>
 
 <% if flash.present? %>

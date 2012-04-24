@@ -50,6 +50,7 @@ pl:
 
     controllers:
       you_are_not_permitted_to_perform_this_action: "Nie posiadasz wymaganych uprawnień aby wykonać tą akcję"
+      you_have_to_be_signed_in_to_perform_this_action: "Musisz być zalogowany"
 
       topics:
         topic_opened: "Temat został otwarty"

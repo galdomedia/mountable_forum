@@ -7,7 +7,7 @@ require "simple_forum/version"
 Gem::Specification.new do |s|
   s.name        = "simple_forum"
   s.version     = SimpleForum::VERSION
-  s.authors     = ["Galdomedia"]
+  s.authors     = ["GaldoMedia"]
   s.email       = ["piotr@galdomedia.pl"]
   s.homepage    = "https://github.com/galdomedia/mountable_forum"
   s.summary     = "Simple forum distributed as Rails mountable engine."
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.3"
   s.add_dependency "jquery-rails"
 
-  s.add_dependency "abstract_auth"
   s.add_dependency "will_paginate", "~> 3.0"
   s.add_dependency "bb-ruby"
 
