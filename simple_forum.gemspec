@@ -21,8 +21,10 @@ Gem::Specification.new do |s|
 
   s.add_dependency "will_paginate", "~> 3.0"
   s.add_dependency "bb-ruby"
+  s.add_dependency "formtastic"
+  s.add_dependency 'web-app-theme'
 
-  s.add_development_dependency 'rspec-rails'
+
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "devise"
   s.add_development_dependency "rspec-rails"

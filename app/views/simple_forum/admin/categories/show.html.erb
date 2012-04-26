@@ -1,0 +1,35 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li>
+        <%= link_to "#{t("web-app-theme.list", :default => "List")}", simple_forum.admin_categories_path %>
+      </li>
+      <li>
+        <%= link_to "#{t("web-app-theme.edit", :default => "Edit")}", simple_forum.edit_admin_category_path(resource) %>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title">
+      <%= SimpleForum::Category.model_name.human %>
+    </h2>
+
+    <div class="inner">
+      <p>
+        <strong><%= resource.class.human_attribute_name :name %></strong>:
+        <%= resource.name %>
+      </p>
+
+      <p>
+        <strong><%= resource.class.human_attribute_name :body %></strong>:
+        <%= simple_format(resource.body) %>
+      </p>
+
+      <p>
+        <strong><%= resource.class.human_attribute_name :position %></strong>:
+        <%= resource.position %>
+      </p>
+
+    </div>
+  </div>
+</div>
