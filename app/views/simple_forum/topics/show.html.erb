@@ -22,9 +22,9 @@
       <% if user_authenticated? && @forum.is_moderator?(authenticated_user) %>
           <li>
             <% if @topic.is_open? %>
-                <%= link_to t('.close_topic'), simple_forum.close_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+                <%= link_to t('.close_topic'), simple_forum.close_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure', :default => 'Are you sure?') %>
             <% else %>
-                <%= link_to t('.open_topic'), simple_forum.open_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+                <%= link_to t('.open_topic'), simple_forum.open_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure', :default => 'Are you sure?') %>
             <% end %>
           </li>
       <% end %>
