@@ -1,0 +1,55 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li>
+        <%= link_to "#{t("web-app-theme.list", :default => "List")}", simple_forum.admin_forums_path %>
+      </li>
+      <li>
+        <%= link_to "#{t("web-app-theme.edit", :default => "Edit")}", simple_forum.edit_admin_forum_path(resource) %>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title">
+      <%= SimpleForum::Forum.model_name.human %>
+    </h2>
+
+    <div class="inner">
+      <p>
+        <strong><%= resource.class.human_attribute_name :name %></strong>:
+        <%= resource.name %>
+      </p>
+
+      <p>
+        <strong><%= resource.class.human_attribute_name :body %></strong>:
+        <%= simple_format(resource.body) %>
+      </p>
+
+      <p>
+        <strong><%= resource.class.human_attribute_name :position %></strong>:
+        <%= resource.position %>
+      </p>
+
+      <p>
+        <strong><%= resource.class.human_attribute_name :is_topicable %></strong>:
+        <%= resource.is_topicable %>
+      </p>
+
+      <p>
+        <strong><%= resource.class.human_attribute_name :category %></strong>:
+        <%= resource.category.try(:name) %>
+      </p>
+
+      <div>
+        <strong><%= resource.class.human_attribute_name :moderators %></strong>:
+        <ul>
+          <% resource.moderators.each do |moderator| %>
+              <li>
+                <%= moderator.name %>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

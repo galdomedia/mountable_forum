@@ -16,4 +16,12 @@ SimpleForum::Engine.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources :forums do
+      get :search_users, :on => :collection
+    end
+    resources :categories
+
+  end
+
 end

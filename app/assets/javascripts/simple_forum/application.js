@@ -12,4 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//=
+//= require_self
+
+simple_forum = {
+    'translations':{}
+};

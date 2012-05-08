@@ -1,0 +1,18 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li>
+        <%= link_to "#{t("web-app-theme.list", :default => "List")}", simple_forum.admin_categories_path %>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title">
+      Edit
+    </h2>
+
+    <div class="inner">
+      <%= render :partial => "form" %>
+    </div>
+  </div>
+</div>

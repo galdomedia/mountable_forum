@@ -11,6 +11,10 @@ SimpleForum.setup do |config|
   # How long users can delete theirs posts. You can set 0 if users should not delete theirs posts. The default is 15.
   #config.minutes_for_delete_post = 5
 
+  #config.sign_in_path = :new_user_session
+
+  #config.sign_out_path = :destroy_user_session
+
   # User model class. The default is User
   #config.user_class do
   #  User
@@ -25,4 +29,10 @@ SimpleForum.setup do |config|
   #user_authenticated? do
   #  user_signed_in?
   #end
+
+  #default :forum_admin? implementation
+  #forum_admin? do
+  #  current_user && current_user.is_admin?
+  #end
+
 end
