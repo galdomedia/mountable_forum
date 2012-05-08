@@ -1,0 +1,5 @@
+<li>
+  <%= moderator.name %>
+  <%= f.hidden_field :moderator_ids, :value => moderator.id, :multiple => true %>
+  <%= link_to "[#{I18n.t('simple_forum.admin/forums.remove_moderator')}]", "#", :class => 'remove-moderator', :confirm => t("web-app-theme.confirm", :default => "Are you sure?") %>
+</li>

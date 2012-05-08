@@ -6,6 +6,9 @@ en:
     new_posts_present: "New posts"
     new_posts_absent: "No new posts"
     are_you_sure: "Are you sure?"
+    sign_in: "Sign in"
+    sign_up: "Sign up"
+    forum_administration: "Forum administration"
 
     forums:
       index:
@@ -40,6 +43,11 @@ en:
         user_posts_count: "Posts count"
         post_deleted: "Post deleted"
         post_edited: "Last edited"
+
+    admin/forums:
+      search_users: "Search users"
+      add_moderator: "Add"
+      remove_moderator: "Remove"
 
       new:
         new_topic: "New topic"

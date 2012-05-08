@@ -25,6 +25,23 @@
   <%= link_to image_tag('simple_forum/galdomedia-logo.png', :alt => 'GaldoMedia'), "http://galdomedia.pl", :title => "GaldoMedia" %>
 </p>
 
+<ul class="links">
+  <% if user_authenticated? %>
+      <li>
+        <%= link_to t('simple_forum.sign_out'), main_app.send(:"#{SimpleForum.sign_out_path}_path"), :method => main_app.routes.routes.named_routes["#{SimpleForum.sign_out_path}"].verb === "DELETE" ? :delete : :get  %>
+      </li>
+      <% if forum_admin? %>
+          <li>
+            <%= link_to t('simple_forum.forum_administration'), simple_forum.admin_forums_path %>
+          </li>
+      <% end %>
+  <% else %>
+      <li>
+        <%= link_to t('simple_forum.sign_in'), main_app.send(:"#{SimpleForum.sign_in_path}_path") %>
+      </li>
+  <% end %>
+</ul>
+
 <% if flash.present? %>
     <div id="flash_messages">
       <% flash.each do |key, val| %>

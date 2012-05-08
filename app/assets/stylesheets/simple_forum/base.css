@@ -33,6 +33,16 @@ h2 {
     margin: 20px 0;
 }
 
+body ul.links {
+    float: right;
+}
+
+body ul.links li {
+    float: right;
+    padding-left: 16px;
+    list-style: none;
+}
+
 p, h2, pre {
     margin: 0;
     padding: 5px 20px;

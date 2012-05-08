@@ -10,6 +10,8 @@ gem "jquery-rails"
 
 gem 'devise'
 gem "sqlite3"
+gem 'web-app-theme', :git => 'git://github.com/pilu/web-app-theme.git'
+#gem 'formtastic'
 
 group :assets do
   gem 'coffee-rails'
