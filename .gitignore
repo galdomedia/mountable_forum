@@ -8,3 +8,5 @@ spec/dummy/tmp/
 
 spec/dummy/file_store/simple_forum_activity
 spec/dummy/db/migrate/*_create_simple_*.rb
+
+.rvmrc
