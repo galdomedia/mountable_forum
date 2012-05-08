@@ -17,12 +17,12 @@ SimpleForum.setup do |config|
   #end
 
   # default :authenticated_user implementation
-  #authenticated_user do
+  #config.authenticated_user do
   #  current_user
   #end
 
   # default :user_authenticated? implementation
-  #user_authenticated? do
+  #config.user_authenticated? do
   #  user_signed_in?
   #end
 end

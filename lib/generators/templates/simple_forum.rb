@@ -21,17 +21,17 @@ SimpleForum.setup do |config|
   #end
 
   # default :authenticated_user implementation. The default is current_user
-  #authenticated_user do
+  #config.authenticated_user do
   #  current_user
   #end
 
   # default :user_authenticated? implementation. The default is user_signed_in?
-  #user_authenticated? do
+  #config.user_authenticated? do
   #  user_signed_in?
   #end
 
   #default :forum_admin? implementation
-  #forum_admin? do
+  #config.forum_admin? do
   #  current_user && current_user.is_admin?
   #end
 
