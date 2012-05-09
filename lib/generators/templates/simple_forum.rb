@@ -17,7 +17,7 @@ SimpleForum.setup do |config|
 
   # User model class. The default is User
   #config.user_class do
-  #  User
+  #  ::User
   #end
 
   # default :authenticated_user implementation. The default is current_user

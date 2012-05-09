@@ -30,7 +30,7 @@ module SimpleForum
 
   #default :user_class implementation
   user_class do
-    User
+    ::User
   end
 
   def self.authenticated_user(&blk)
