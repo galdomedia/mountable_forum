@@ -32,10 +32,10 @@ module SimpleForum
 
     end
 
-    set_table_name 'simple_forum_user_activities' #should work table_name_prefix in SimpleForum module but it's not!'
+    self.table_name = 'simple_forum_user_activities' #should work table_name_prefix in SimpleForum module but it's not!'
 
     belongs_to :user,
-               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+               :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
 
     belongs_to :memoryable, :polymorphic => true
 
