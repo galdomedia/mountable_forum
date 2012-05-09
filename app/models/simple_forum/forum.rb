@@ -1,8 +1,5 @@
 module SimpleForum
   class Forum < ::ActiveRecord::Base
-
-    set_table_name 'simple_forum_forums' #should work table_name_prefix in SimpleForum module but it's not!'
-
     #acts_as_nested_set
 
     has_many :topics,
@@ -30,12 +27,12 @@ module SimpleForum
              :through => :moderatorships,
              :source => :user
 
-    scope :default_order, order("#{quoted_table_name}.position ASC")
+    scope :default_order, order("#{quoted_table_name}.position ASC, #{quoted_table_name}.id ASC")
 
     validates :name, :presence => true
     validates :position, :presence => true, :numericality => {:only_integer => true, :allow_nil => true}
 
-    attr_accessible :name, :body, :parent_id, :position, :moderator_ids, :category_id
+    attr_accessible :name, :body, :parent_id, :position, :moderator_ids, :category_id, :is_topicable
 
     if respond_to?(:has_friendly_id)
       has_friendly_id :name, :use_slug => true, :approximate_ascii => true

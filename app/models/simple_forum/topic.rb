@@ -1,9 +1,6 @@
 module SimpleForum
   class Topic < ::ActiveRecord::Base
-
-    set_table_name 'simple_forum_topics' #should work table_name_prefix in SimpleForum module but it's not!'
-
-    belongs_to :user, :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+    belongs_to :user, :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
 
     belongs_to :forum,
                :class_name => "SimpleForum::Forum", :counter_cache => true
@@ -17,7 +14,7 @@ module SimpleForum
                :class_name => "SimpleForum::Post"
 
     has_one :last_post,
-                :order => "#{SimpleForum::Post.table_name}.created_at DESC",
+                :order => "#{SimpleForum::Post.quoted_table_name}.created_at DESC",
                 :class_name => "SimpleForum::Post"
 
     has_one :first_post,

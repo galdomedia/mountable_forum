@@ -1,6 +1,5 @@
 module SimpleForum
-  class ForumsController < ApplicationController
-    respond_to :html
+  class ForumsController < ::SimpleForum::ApplicationController
 
     before_filter :find_forum, :except => [:index]
 

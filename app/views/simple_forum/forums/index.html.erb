@@ -1,5 +1,5 @@
 <div id="breadcrumbs">
-  <%= link_to SimpleForum.root_application_name, root_path %>
+  <%= link_to SimpleForum.main_application_name, main_app.root_path %>
   &gt;
   <%= 'Forum' %>
 </div>
@@ -35,13 +35,13 @@
           <tr>
             <td class="icon-cell">
               <% if simple_forum_recent_activity?(f) %>
-                  <%= image_tag('/simple_forum_engine/images/forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
+                  <%= image_tag('simple_forum/forumNewPosts.gif', :alt => t('simple_forum.new_posts_present', :default => 'New posts'), :title => t('simple_forum.new_posts_present', :default => 'New posts')) %>
               <% else %>
-                  <%= image_tag('/simple_forum_engine/images/forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
+                  <%= image_tag('simple_forum/forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent', :default => 'No new posts'), :title => t('simple_forum.new_posts_absent', :default => 'No new posts')) %>
               <% end %>
             </td>
             <td class="forum-cell">
-              <span><%= link_to f.name, simple_forum_forum_path(f) %></span><br/>
+              <span><%= link_to f.name, simple_forum.forum_path(f) %></span><br/>
               <span><%= f.body %></span><br/>
               <span>
                 (
@@ -60,7 +60,7 @@
               <% if f.recent_post %>
                   <%= content_tag :span, :title => l(f.recent_post.created_at) do %>
                       <%= link_to "#{time_ago_in_words(f.recent_post.created_at)} #{t('simple_forum.ago', :default => 'ago')}",
-                                  simple_forum_forum_topic_path(f, f.recent_post.topic, :page => f.recent_post.topic.last_page, :anchor => "post-#{f.recent_post.id}")
+                                  simple_forum.forum_topic_path(f, f.recent_post.topic, :page => f.recent_post.topic.last_page, :anchor => "post-#{f.recent_post.id}")
                       %>
                   <% end %>
                   <br/>

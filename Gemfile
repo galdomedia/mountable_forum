@@ -1,18 +1,30 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
-gem "rails", "3.1.0.rc5"
-#gem "rails", :git => "git://github.com/rails/rails.git"
-#gem "arel", :git => "git://github.com/rails/arel.git"
-#gem "rack", :git => "git://github.com/rack/rack.git"
-
-gem "devise"
-
-gem "sqlite3"
-
-#group :development, :test do
-  gem "capybara", ">= 0.4.0"
-  gem "rspec-rails", ">= 2.0.0.beta"
-  gem "factory_girl"
-#end
-
+# Declare your gem's dependencies in simple_forum.gemspec.
+# Bundler will treat runtime dependencies like base dependencies, and
+# development dependencies will be added by default to the :development group.
 gemspec
+
+# Gems used by the dummy application (needs to be here instead of the gemspec)
+gem "jquery-rails"
+
+gem 'devise'
+gem "sqlite3"
+gem 'web-app-theme', :git => 'git://github.com/pilu/web-app-theme.git'
+#gem 'formtastic'
+
+group :assets do
+  gem 'coffee-rails'
+  gem 'sass-rails'
+  gem 'uglifier'
+end
+
+group :development, :test do
+  gem "rspec-rails"
+  gem "factory_girl"
+end
+
+# To use debugger
+# gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem 'rb-readline'

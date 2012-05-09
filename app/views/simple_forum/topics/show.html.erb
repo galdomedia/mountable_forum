@@ -1,25 +1,18 @@
-<%= content_for :stylesheets do %>
-    <%= stylesheet_link_tag "/simple_forum_engine/markitup/skins/markitup/style",
-                            "/simple_forum_engine/markitup/sets/bbcode/style" %>
-<% end %>
-<%= content_for :javascripts do %>
-    <%= javascript_include_tag "/simple_forum_engine/markitup/jquery.markitup.js",
-                               "/simple_forum_engine/markitup/sets/bbcode/set.js",
-                               "/simple_forum_engine/javascripts/markitup.js" %>
-<% end %>
+<% content_for :stylesheets, stylesheet_link_tag('simple_forum/markitup') %>
+<% content_for :javascripts, javascript_include_tag("simple_forum/markitup") %>
+
 <% content_for :head do %>
     <script type="text/javascript">
-        var post_preview_path = "<%= preview_simple_forum_forum_topic_posts_path(@forum, @topic) %>";
+        var post_preview_path = "<%= simple_forum.preview_forum_topic_posts_path(@forum, @topic) %>";
     </script>
 <% end %>
 
-
 <div id="breadcrumbs">
-  <%= link_to SimpleForum.root_application_name, root_path %>
+  <%= link_to SimpleForum.main_application_name, main_app.root_path %>
   &gt;
-  <%= link_to 'Forum', simple_forum_root_path %>
+  <%= link_to 'Forum', simple_forum.root_path %>
   &gt;
-  <%= link_to @forum.name, simple_forum_forum_path(@forum) %>
+  <%= link_to @forum.name, simple_forum.forum_path(@forum) %>
   &gt;
   <%= @topic.title %>
 </div>
@@ -29,9 +22,9 @@
       <% if user_authenticated? && @forum.is_moderator?(authenticated_user) %>
           <li>
             <% if @topic.is_open? %>
-                <%= link_to t('.close_topic'), close_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+                <%= link_to t('.close_topic'), simple_forum.close_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure', :default => 'Are you sure?') %>
             <% else %>
-                <%= link_to t('.open_topic'), open_simple_forum_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure') %>
+                <%= link_to t('.open_topic'), simple_forum.open_forum_topic_path(@forum, @topic), :method => :post, :confirm => t('simple_forum.are_you_sure', :default => 'Are you sure?') %>
             <% end %>
           </li>
       <% end %>
@@ -48,7 +41,7 @@
 
 <% if @topic.is_open? %>
     <% if user_authenticated? %>
-        <%= form_for @post, :url => simple_forum_forum_topic_posts_path(@forum, @topic), :as => :post, :html => {:id => 'new_post_form'} do |f| -%>
+        <%= form_for @post, :url => simple_forum.forum_topic_posts_path(@forum, @topic), :as => :post, :html => {:id => 'new_post_form'} do |f| -%>
             <p>
               <%= f.label :body %>
               <%= f.text_area :body, :class => 'markitup post-body' %>

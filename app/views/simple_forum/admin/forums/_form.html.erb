@@ -1,0 +1,45 @@
+<% require 'ostruct' %>
+<% content_for :javascripts, javascript_include_tag('simple_forum/moderators') %>
+
+<% content_for :head do %>
+    <style type="text/css">
+        #search_users_result {
+            display: inline-block;
+            color: blue;
+        }
+    </style>
+<% end %>
+
+<%= semantic_form_for [:admin, resource], :html => {:class => 'form'} do |f| %>
+    <%= f.semantic_errors %>
+    <%= f.inputs do %>
+        <%= f.input :name %>
+        <%= f.input :body %>
+        <%= f.input :position %>
+        <%= f.input :is_topicable %>
+        <%= f.input :category_id, :as => :select, :collection => SimpleForum::Category.all.map { |c| [c.name, c.id] } %>
+    <% end %>
+    <%= f.inputs f.object.class.human_attribute_name(:moderators) do %>
+        <li class="input stringish">
+          <%= label_tag 'search_users_input', t('simple_forum.admin/forums.search_users'), :class => 'label' %>
+          <%= text_field_tag :user_name_like, "", :id => 'search_users_input', :placeholder => t('simple_forum.admin/forums.search_users', :default => 'Serach users') %>
+          <ul id="search_users_result"></ul>
+          <script type="text/javascript">
+              simple_forum.moderator_template = "<%= escape_javascript(render(:partial => 'moderator', :locals => {:f => f, :moderator => OpenStruct.new(:name => "temp_user_name", :id => "temp_user_id")})) %>";
+              simple_forum.user_search_path = "<%= escape_javascript(simple_forum.search_users_admin_forums_path(:format => :json)) %>";
+              simple_forum.translations['add_moderator'] = "<%= escape_javascript(t('simple_forum.admin/forums.add_moderator', :default => 'add')) %>";
+          </script>
+
+          <%= f.hidden_field :moderator_ids, :value => nil, :multiple => true %>
+        </li>
+        <li class="input stringish">
+          <ul id="moderators">
+            <%= label_tag nil, f.object.class.human_attribute_name(:moderators), :class => 'label' %>
+            <% f.object.moderators.each do |moderator| %>
+                <%= render :partial => 'moderator', :locals => {:f => f, :moderator => moderator} %>
+            <% end %>
+          </ul>
+        </li>
+    <% end %>
+    <%= f.actions(:submit) %>
+<% end %>

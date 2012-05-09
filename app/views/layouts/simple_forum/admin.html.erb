@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+<head>
+  <meta charset="utf-8">
+
+  <title><%= yield(:title) || '' %></title>
+
+  <%= favicon_link_tag %>
+
+  <%= stylesheet_link_tag "simple_forum/admin" %>
+
+  <%= yield :stylesheets %>
+
+  <%= csrf_meta_tag %>
+
+  <%= javascript_include_tag "simple_forum/application" %>
+
+  <%= yield :javascripts %>
+
+  <%= yield :head %>
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <h1>
+      <%= link_to "Forum", simple_forum.root_path %>
+    </h1>
+
+    <div id="user-navigation">
+      <!--<ul class="wat-cf"></ul>-->
+    </div>
+    <div id="main-navigation">
+      <ul class="wat-cf">
+        <%= content_tag(:li, :class => controller.controller_path == 'simple_forum/admin/forums' ? 'active' : '') do %>
+            <%= link_to SimpleForum::Forum.model_name.human(:count => 3), simple_forum.admin_forums_path %>
+        <% end %>
+        <%= content_tag(:li, :class => controller.controller_path == 'simple_forum/admin/categories' ? 'active' : '') do %>
+            <%= link_to SimpleForum::Category.model_name.human(:count => 3), simple_forum.admin_categories_path %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div id="wrapper" class="wat-cf">
+    <div class="flash">
+      <% flash.each do |type, message| %>
+          <%= content_tag(:div, :class => "message #{type}") do %>
+              <p>
+                <%= message %>
+              </p>
+          <% end %>
+      <% end %>
+    </div>
+    <div id="main">
+      <%= yield %>
+
+      <div id="footer">
+        <div class="block">
+          <p>
+            Copyright &copy; #{Time.current.year}.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="sidebar">
+      <%= yield :sidebar %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

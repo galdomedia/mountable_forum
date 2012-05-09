@@ -1,7 +1,7 @@
 <div id="breadcrumbs">
-  <%= link_to SimpleForum.root_application_name, root_path %>
+  <%= link_to SimpleForum.main_application_name, main_app.root_path %>
   &gt;
-  <%= link_to 'Forum', simple_forum_root_path %>
+  <%= link_to 'Forum', simple_forum.root_path %>
   &gt;
   <%= @forum.name %>
 </div>
@@ -11,7 +11,7 @@
 
       <% if @forum.is_topicable? && user_authenticated? %>
           <li>
-            <%= link_to t(".new_topic"), new_simple_forum_forum_topic_path(@forum) %>
+            <%= link_to t(".new_topic"), simple_forum.new_forum_topic_path(@forum) %>
           </li>
       <% end %>
     </ul>
@@ -36,19 +36,19 @@
       <tr>
         <td class="icon-cell">
           <% if simple_forum_recent_activity?(t) %>
-              <%= image_tag('/simple_forum_engine/images/forumNewPosts.gif', :alt => t('simple_forum.new_posts_present'), :title => t('simple_forum.new_posts_present')) %>
+              <%= image_tag('/simple_forum_engine/images/forumNewPosts.gif', :alt => t('simple_forum.new_posts_present', :default => 'New posts'), :title => t('simple_forum.new_posts_present', :default => 'New posts')) %>
           <% else %>
-              <%= image_tag('/simple_forum_engine/images/forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent'), :title => t('simple_forum.new_posts_absent')) %>
+              <%= image_tag('/simple_forum_engine/images/forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent', :default => 'No new posts'), :title => t('simple_forum.new_posts_absent', :default => 'No new posts')) %>
           <% end %>
         </td>
         <td class="topic-cell">
-          <span><%= link_to t.title, simple_forum_forum_topic_path(@forum, t) %></span>
+          <span><%= link_to t.title, simple_forum.forum_topic_path(@forum, t) %></span>
           <% if t.paged? %>
             <span>
               <ul>
                 <% t.page_numbers.each do |p| %>
                     <% if p %>
-                        <li><%= link_to p, simple_forum_forum_topic_path(@forum, t, :page => p) %></li>
+                        <li><%= link_to p, simple_forum.forum_topic_path(@forum, t, :page => p) %></li>
                     <% else %>
                         <li class="gap">&hellip;</li>
                     <% end %>
@@ -75,7 +75,7 @@
           <% if t.recent_post %>
               <%= content_tag :span, :title => l(t.recent_post.created_at) do %>
                   <%= link_to "#{time_ago_in_words(t.recent_post.created_at)} #{t('simple_forum.ago', :default => 'ago')}",
-                              simple_forum_forum_topic_path(@forum, t, :page => t.last_page, :anchor => "post-#{t.recent_post.id}")
+                              simple_forum.forum_topic_path(@forum, t, :page => t.last_page, :anchor => "post-#{t.recent_post.id}")
                   %>
               <% end %>
               <br/>

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110812120157) do
+ActiveRecord::Schema.define(:version => 20120509123909) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
@@ -27,8 +28,8 @@ ActiveRecord::Schema.define(:version => 20110812120157) do
     t.text     "body"
     t.integer  "position",   :default => 0
     t.string   "slug_cache"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "simple_forum_categories", ["slug_cache"], :name => "index_simple_forum_categories_on_slug_cache"
@@ -43,8 +44,8 @@ ActiveRecord::Schema.define(:version => 20110812120157) do
     t.integer  "topics_count",   :default => 0
     t.integer  "posts_count",    :default => 0
     t.string   "slug_cache"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   add_index "simple_forum_forums", ["category_id"], :name => "index_simple_forum_forums_on_category_id"
@@ -53,8 +54,8 @@ ActiveRecord::Schema.define(:version => 20110812120157) do
   create_table "simple_forum_moderatorships", :force => true do |t|
     t.integer  "forum_id"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "simple_forum_moderatorships", ["forum_id"], :name => "index_simple_forum_moderatorships_on_forum_id"
@@ -70,8 +71,8 @@ ActiveRecord::Schema.define(:version => 20110812120157) do
     t.integer  "edited_by_id"
     t.datetime "edited_at"
     t.string   "slug_cache"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "simple_forum_posts", ["deleted_by_id"], :name => "index_simple_forum_posts_on_deleted_by_id"
@@ -91,8 +92,8 @@ ActiveRecord::Schema.define(:version => 20110812120157) do
     t.integer  "posts_count",     :default => 0
     t.integer  "views_count",     :default => 0
     t.string   "slug_cache"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "simple_forum_topics", ["forum_id"], :name => "index_simple_forum_topics_on_forum_id"
@@ -105,17 +106,17 @@ ActiveRecord::Schema.define(:version => 20110812120157) do
     t.string   "memoryable_type", :limit => 50
     t.integer  "user_id"
     t.datetime "read_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "simple_forum_user_activities", ["user_id"], :name => "index_simple_forum_user_activities_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                             :default => "", :null => false
-    t.string   "encrypted_password", :limit => 128, :default => "", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "email",              :default => "", :null => false
+    t.string   "encrypted_password", :default => "", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
 end

@@ -1,0 +1,45 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li>
+        <%= link_to "#{t("web-app-theme.new", :default => "New")}", simple_forum.new_admin_category_path %>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title">
+      <%= SimpleForum::Category.model_name.human(:count => 3) %>
+    </h2>
+
+    <div class="inner">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th><%= SimpleForum::Category.human_attribute_name :name %></th>
+          <th class="last">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @categories.each do |c| %>
+            <tr>
+              <td><%= c.id %></td>
+              <td><%= c.name %></td>
+              <td class="last">
+                <%= link_to t("web-app-theme.show", :default => "Show"), simple_forum.admin_category_path(c) %>
+                |
+                <%= link_to t("web-app-theme.edit", :default => "Edit"), simple_forum.edit_admin_category_path(c) %>
+                |
+                <%= link_to t("web-app-theme.delete", :default => "Delete"), simple_forum.admin_category_path(c), :method => :delete, :confirm => t('simple_forum.are_you_sure', :default => 'Are you sure?') %>
+
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+

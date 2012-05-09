@@ -1,5 +1,9 @@
-unless User.where(:email => 'test@test.com').exists?
-  User.create!(:email => 'test@test.com', :password => 'qwerty')
+unless User.where(:email => 'user@galdomedia.pl').exists?
+  User.create!(:email => 'user@galdomedia.pl', :password => 'qwerty')
+end
+
+unless User.where(:email => 'admin@galdomedia.pl').exists?
+  User.create!(:email => 'admin@galdomedia.pl', :password => 'qwerty')
 end
 
 SimpleForum::Category.create!(:name => 'Test category') unless SimpleForum::Category.exists?

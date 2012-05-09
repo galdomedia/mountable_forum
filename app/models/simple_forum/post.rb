@@ -1,16 +1,13 @@
 module SimpleForum
   class Post < ::ActiveRecord::Base
-
-    set_table_name 'simple_forum_posts' #should work table_name_prefix in SimpleForum module but it's not!'
-
     belongs_to :user,
-               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+               :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
 
     belongs_to :edited_by,
-               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+               :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
 
     belongs_to :deleted_by,
-               :class_name => instance_eval(&AbstractAuth.invoke(:user_class)).name
+               :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
 
     belongs_to :topic,
                :counter_cache => true,

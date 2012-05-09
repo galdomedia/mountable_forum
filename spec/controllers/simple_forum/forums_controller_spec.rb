@@ -5,7 +5,7 @@ describe SimpleForum::ForumsController do
   render_views
 
   before(:all) do
-    @forum = Factory(:forum)
+    @forum = FactoryGirl.create(:forum)
   end
 
   before(:each) do

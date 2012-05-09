@@ -1,0 +1,130 @@
+en:
+  simple_forum:
+    by: "by"
+    at: "at"
+    ago: "ago"
+    new_posts_present: "New posts"
+    new_posts_absent: "No new posts"
+    are_you_sure: "Are you sure?"
+    sign_in: "Sign in"
+    sign_up: "Sign up"
+    forum_administration: "Forum administration"
+
+    forums:
+      index:
+        title: "Forum"
+        forums: "Forum"
+        topics: "Topics"
+        posts: "Posts"
+        last_post: "Recent post"
+        moderated_by: "Moderated by"
+
+      show:
+        forum: "Forum"
+        topics: "Topics"
+        replies: "Replies"
+        views: "Views"
+        last_post: "Recent post"
+        new_topic: "New topic"
+
+    topics:
+      show:
+        topic_is_closed: "Topic is closed!"
+        you_have_to_be_signed_in_to_create_post: "You need to sign in to create new posts"
+        close_topic: "Close topic"
+        open_topic: "Open topic"
+       
+      post:
+        edit: "Edit"
+        delete: "Delete"
+        cite: "Cite"
+        user_joined: "Joined"
+        post_sent: "Sent at"
+        user_posts_count: "Posts count"
+        post_deleted: "Post deleted"
+        post_edited: "Last edited"
+
+    admin/forums:
+      search_users: "Search users"
+      add_moderator: "Add"
+      remove_moderator: "Remove"
+
+      new:
+        new_topic: "New topic"
+
+    posts:
+      edit:
+        post_edit: "Edit post"
+
+    controllers:
+      you_are_not_permitted_to_perform_this_action: "You are not permitted to perform this action"
+      you_have_to_be_signed_in_to_perform_this_action: "You have to be signed in to perform this action"
+
+      topics:
+        topic_opened: "Topic was successfully opened"
+        topic_already_opened: "Topic already opened"
+        topic_closed: "Topic was successfully closed"
+        topic_already_closed: "Topic already closed"
+        topic_created: "Topic was successfully created"
+
+      posts:
+        post_created: "Post was successfully created"
+        post_updated: "Post was successfully updated"
+        post_deleted: "Post was successfully deleted"
+        post_cant_be_deleted: "You can't delete this post"
+        post_cant_be_edited: "You can't edit this post"
+
+    validations:
+      forum_must_be_topicable: "Topics can't be created"
+
+  activerecord:
+    models:
+      simple_forum:
+        forum: "Forum"
+        topic: "Topic"
+        post: "Post"
+        category: "Category"
+
+    attributes:
+      simple_forum/forum:
+        name: "Name"
+        body: "Body"
+        is_topicable: "Is topicable?"
+        position: "Position"
+        topics_count: "Topics count"
+        posts_count: "Posts count"
+        moderators: "Moderators"
+        moderator_ids: "Moderators"
+        category: "Category"
+        category_id: "Category"
+
+      simple_forum/category:
+        name: "Name"
+        position: "Position"
+        body: "Body"
+        forums: "Forums"
+
+      simple_forum/topic:
+        title: "Topic"
+        body: "Post content"
+        forum: "Forum"
+        forum_id: "Forum"
+        user: "User"
+        is_closed: "Closed?"
+        posts_count: "Posts count"
+        views_count: "Views count"
+
+      simple_forum/post:
+        body: "Content"
+        topic: "Topic"
+        topic_id: "Topic"
+        forum: "Forum"
+        forum_id: "Forum"
+        user: "User"
+        user_id: "User"
+        deleted_by: "Deleted by"
+        deleted_by_id: "Deleted by"
+        deleted_at: "Deleted at"
+        edited_by: "Edited by"
+        edited_by_id: "Edited by"
+        edited_at: "Edited at"

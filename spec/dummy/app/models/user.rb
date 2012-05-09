@@ -6,5 +6,8 @@ class User < ActiveRecord::Base
     "Login-#{id}"
   end
 
+  def is_admin?
+    /admin@/ === email
+  end
 
 end

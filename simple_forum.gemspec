@@ -1,14 +1,31 @@
-# Provide a simple gemspec so you can easily use your enginex
-# project in your rails apps through git.
+$:.push File.expand_path("../lib", __FILE__)
+
+# Maintain your gem's version:
+require "simple_forum/version"
+
+# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name = "simple_forum"
-  s.summary = "Insert SimpleForum summary."
-  s.description = "Insert SimpleForum description."
-  s.files = Dir["{app,lib,config}/**/*"] + ["MIT-LICENSE", "Rakefile", "Gemfile", "README.rdoc"]
-  s.version = "0.0.1"
+  s.name        = "simple_forum"
+  s.version     = SimpleForum::VERSION
+  s.authors     = ["GaldoMedia"]
+  s.email       = ["piotr@galdomedia.pl"]
+  s.homepage    = "https://github.com/galdomedia/mountable_forum"
+  s.summary     = "Simple forum distributed as Rails mountable engine."
+  s.description = "Simple forum distributed as Rails mountable engine."
 
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "abstract_auth"
-  s.add_dependency "will_paginate", "~> 3.0.pre2"
+  s.add_dependency "rails", "~> 3.2.3"
+  s.add_dependency "jquery-rails"
+
+  s.add_dependency "will_paginate", "~> 3.0"
   s.add_dependency "bb-ruby"
+  s.add_dependency "formtastic"
+  s.add_dependency 'web-app-theme'
+
+
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "devise"
+  s.add_development_dependency "rspec-rails"
 end

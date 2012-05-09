@@ -1,0 +1,77 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li class="active">
+        <%= link_to "#{t("web-app-theme.list", :default => "List")}", simple_forum.admin_forums_path %>
+      </li>
+      <li>
+        <%= link_to "#{t("web-app-theme.new", :default => "New")}", simple_forum.new_admin_forum_path %>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title">
+      <%= SimpleForum::Forum.model_name.human(:count => 3) %>
+    </h2>
+
+    <div class="inner">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th><%= SimpleForum::Forum.human_attribute_name :name %></th>
+          <th><%= SimpleForum::Forum.human_attribute_name :moderators %></th>
+          <th><%= SimpleForum::Forum.human_attribute_name :topics_size %></th>
+          <th><%= SimpleForum::Forum.human_attribute_name :posts_size %></th>
+          <th><%= SimpleForum::Forum.human_attribute_name :recent_post %></th>
+          <th class="last">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @forums_by_category.each_pair do |c, forums| %>
+            <tr>
+              <th colspan="6" style="text-align: center; font-weight: bolder;">
+                <%= content_tag(:span, c.try(:name) || "No category", :title => c.try(:body)) %>
+              </th>
+              <th class="last">&nbsp;</th>
+            </tr>
+            <% forums.each do |f| %>
+                <tr>
+                  <td><%= f.id %></td>
+                  <td><%= f.name %></td>
+                  <td><%= f.moderators.map { |m| h(m.name) }.join(', ').html_safe %></td>
+                  <td><%= number_with_delimiter f.topics.size %></td>
+                  <td><%= number_with_delimiter f.posts.size %></td>
+                  <td>
+                    <% if f.recent_post %>
+                        <%= content_tag :span, :title => l(f.recent_post.created_at) do %>
+                            <%= link_to "#{time_ago_in_words(f.recent_post.created_at)} #{t('simple_forum.ago', :default => 'ago')}",
+                                        simple_forum.forum_topic_path(f, f.recent_post.topic, :page => f.recent_post.topic.last_page, :anchor => "post-#{f.recent_post.id}")
+                            %>
+                        <% end %>
+                        <br/>
+                        <cite>
+                          <%= t('simple_forum.by', :default => 'by') %>
+                          <%= f.recent_post.user.name %>
+                        </cite>
+                    <% end %>
+                  </td>
+                  <td class="last">
+                    <%= link_to t("web-app-theme.show", :default => "Show"), simple_forum.admin_forum_path(f) %>
+                    |
+                    <%= link_to t("web-app-theme.edit", :default => "Edit"), simple_forum.edit_admin_forum_path(f) %>
+                    |
+                    <%= link_to t("web-app-theme.delete", :default => "Delete"), simple_forum.admin_forum_path(f), :method => :delete, :confirm => t('simple_forum.are_you_sure', :default => 'Are you sure?') %>
+
+                  </td>
+                </tr>
+            <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+

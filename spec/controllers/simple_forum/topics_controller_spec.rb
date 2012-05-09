@@ -5,8 +5,8 @@ describe SimpleForum::TopicsController do
   render_views
 
   before(:all) do
-    @user = Factory(:user)
-    @topic = Factory(:topic, :user => @user)
+    @user = FactoryGirl.create(:user)
+    @topic = FactoryGirl.create(:topic, :user => @user)
     @forum = @topic.forum
   end
 
@@ -17,7 +17,7 @@ describe SimpleForum::TopicsController do
   describe "GET 'index'" do
     it "should redirect to forums#show" do
       get :index, :forum_id => @forum.to_param
-      response.should redirect_to(simple_forum_forum_path(@forum))
+      response.should redirect_to(forum_path(@forum))
     end
   end
 
@@ -45,14 +45,14 @@ describe SimpleForum::TopicsController do
     describe "POST 'create'" do
       describe "with valid params" do
         it "should redirect to topic" do
-          post :create, :forum_id => @forum.to_param, :topic => Factory.attributes_for(:topic)
-          response.should redirect_to(simple_forum_forum_topic_path(@forum, assigns(:topic)))
+          post :create, :forum_id => @forum.to_param, :topic => FactoryGirl.attributes_for(:topic)
+          response.should redirect_to(forum_topic_path(@forum, assigns(:topic)))
         end
       end
 
       describe "with invalid params" do
         it "should render template 'new'" do
-          post :create, :forum_id => @forum.to_param, :topic => Factory.attributes_for(:topic).inject({}) { |h, (k, v)| h[k] = nil; h }
+          post :create, :forum_id => @forum.to_param, :topic => FactoryGirl.attributes_for(:topic).inject({}) { |h, (k, v)| h[k] = nil; h }
           response.should render_template('new')
         end
       end
