@@ -1,12 +1,6 @@
-<%= content_for :stylesheets do %>
-    <%= stylesheet_link_tag "/simple_forum_engine/markitup/skins/markitup/style",
-                            "/simple_forum_engine/markitup/sets/bbcode/style" %>
-<% end %>
-<%= content_for :javascripts do %>
-    <%= javascript_include_tag "/simple_forum_engine/markitup/jquery.markitup.js",
-                               "/simple_forum_engine/markitup/sets/bbcode/set.js",
-                               "/simple_forum_engine/javascripts/markitup.js" %>
-<% end %>
+<% content_for :stylesheets, stylesheet_link_tag('simple_forum/markitup') %>
+<% content_for :javascripts, javascript_include_tag("simple_forum/markitup") %>
+
 <% content_for :head do %>
     <script type="text/javascript">
         var post_preview_path = "<%= simple_forum.preview_forum_topic_posts_path(@forum, @topic) %>";
