@@ -35,7 +35,7 @@
   <% @topics.each do |t| %>
       <tr>
         <td class="icon-cell">
-          <% if t.recent_activity?(authenticated_user) %>
+          <% if simple_forum_recent_activity?(t) %>
               <%= image_tag('simple_forum/forumNewPosts.gif', :alt => t('simple_forum.new_posts_present', :default => 'New posts'), :title => t('simple_forum.new_posts_present', :default => 'New posts')) %>
           <% else %>
               <%= image_tag('simple_forum/forumNoNewPosts.gif', :alt => t('simple_forum.new_posts_absent', :default => 'No new posts'), :title => t('simple_forum.new_posts_absent', :default => 'No new posts')) %>

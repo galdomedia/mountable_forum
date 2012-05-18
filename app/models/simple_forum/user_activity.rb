@@ -1,80 +1,87 @@
-require 'pstore'
+module SimpleForum
+  class UserActivity < ::ActiveRecord::Base
 
-class SimpleForum::UserActivity
+    class Checker
+      attr_reader :user, :hash
 
-  PATH = Rails.root.join("file_store")
-  FILE = "simple_forum_activity"
-  FileUtils.mkdir_p(PATH)
-
-  attr_reader :user
-
-  def recent_activity?(object)
-    self[object] > Time.now
-    return false unless user.try(:id)
-    if object.is_a?(SimpleForum::Forum)
-      if recent_post = object.recent_post
-        recent_post.created_at > self[object]
-      else
-        false
+      def initialize(user, hash)
+        @user = user
+        @hash = hash
       end
-    else #SimpleForum::Topic
-      if object.last_updated_at
-        object.last_updated_at > self[object]
+
+      def recent_activity?(object)
+        type = object.class.base_class.name.to_sym
+        hash[type] ||= {}
+        read_at = hash[type][object.id]
+        return unless read_at
+
+        if object.is_a?(SimpleForum::Forum)
+          recent_post = object.recent_post
+          recent_post && recent_post.created_at > read_at
+        elsif object.is_a?(SimpleForum::Topic)
+          object.last_updated_at && object.last_updated_at > read_at
+        elsif object.respond_to?(:updated_at)
+          object.updated_at > self[object]
+        end
+      end
+
+      def bang(object)
+        return unless user
+        UserActivity.bang(object, user)
+      end
+
+    end
+
+    belongs_to :user,
+               :class_name => instance_eval(&SimpleForum.invoke(:user_class)).name
+
+    belongs_to :memoryable, :polymorphic => true
+
+    scope :only_read, where("#{quoted_table_name}.read_at IS NOT NULL")
+
+    def self.recent_activity_for_user(user)
+      if user && user.persisted?
+        u = user
+        hash = self.where(:user_id => user.try(:id)).to_hash
       else
-        false
+        u = nil
+        hash = {}
+      end
+      Checker.new(u, hash)
+    end
+
+    def self.to_hash(collection=nil)
+      collection ||= only_read.all
+      {}.tap do |hash|
+        collection.each do |a|
+          hash[a.memoryable_type.to_sym] ||= {}
+          hash[a.memoryable_type.to_sym][a.memoryable_id] = a.read_at
+        end
       end
     end
-  end
 
-  def initialize(user)
-    @user = user
-  end
-
-  def self.store
-    @@store ||= PStore.new(File.join(PATH, FILE))
-  end
-
-  def store
-    self.class.store
-  end
-
-  def [](object, default=Time.now)
-    ret = nil
-    store.transaction(true) do
-      user_hash = store[user.id] || {}
-      object_hash = user_hash[key_for_object(object)] || {}
-      ret = object_hash[object.id]
-    end if user.try(:id)
-    ret || default
-  end
-
-  def bang(object)
-    store.transaction do
-      user_hash = store[user.id] || {}
-      object_hash = (user_hash[key_for_object(object)] ||= {})
-      object_hash[object.id] = Time.now
-      store[user.id] = user_hash
-    end if user.try(:id)
-    nil
-  end
-
-  def destroy
-    store.transaction do
-      store.delete(user.id)
-    end
-  end
-
-  private
-
-  def key_for_object(object)
-    case object
-      when SimpleForum::Forum then
-        :f
-      when SimpleForum::Topic then
-        :t
+    def self.bang(object, user)
+      if am = load(object, user)
+        update_all({:read_at => Time.now}, {:id => am.id})
       else
-        object.model_name.cache_key
+        am = create_for(object, user)
+      end
+      am
     end
-  end
 
+    def self.load(object, user, conditions=nil)
+      scope = self.where({:memoryable_type => object.class.name, :memoryable_id => object.id, :user_id => user.id})
+      scope = scope.where(conditions) if conditions
+      scope.first
+    end
+
+    def self.create_for(object, user, time=Time.now)
+      SimpleForum::UserActivity.create do |m|
+        m.memoryable = object
+        m.user = user
+        m.read_at = time
+      end
+    end
+
+  end
 end

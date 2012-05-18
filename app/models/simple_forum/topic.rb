@@ -98,14 +98,6 @@ module SimpleForum
       update_attribute(:is_closed, true)
     end
 
-    def recent_activity?(user)
-      SimpleForum::UserActivity.new(user).recent_activity?(self)
-    end
-
-    def bang_recent_activity(user)
-      SimpleForum::UserActivity.new(user).bang(self)
-    end
-
     def increment_views_count
       self.class.increment_counter(:views_count, self)
     end

@@ -42,14 +42,6 @@ module SimpleForum
       end
     end
 
-    def recent_activity?(user)
-      SimpleForum::UserActivity.new(user).recent_activity?(self)
-    end
-
-    def bang_recent_activity(user)
-      SimpleForum::UserActivity.new(user).bang(self)
-    end
-
     def moderated_by?(user)
       return false unless user
       @moderated_by_cache ||= {}

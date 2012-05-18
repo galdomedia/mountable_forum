@@ -6,6 +6,7 @@ module SimpleForum
     layout SimpleForum.layout
 
     helper_method :authenticated_user, :user_authenticated?, :forum_admin?
+    helper_method :simple_forum_recent_activity?
 
     private
 
@@ -28,8 +29,22 @@ module SimpleForum
     def forum_admin_required
       redirect_to simple_forum.root_path unless forum_admin?
     end
-  end
 
+    def simple_forum_activity_checker
+      @_simple_forum_activity_checker ||= SimpleForum::UserActivity.recent_activity_for_user(authenticated_user)
+    end
+
+    def simple_forum_recent_activity?(forum_or_topic)
+      return false unless user_authenticated?
+      simple_forum_activity_checker.recent_activity?(forum_or_topic)
+    end
+
+    def bang_simple_forum_recent_activity(forum_or_topic)
+      return unless user_authenticated?
+      simple_forum_activity_checker.bang(forum_or_topic)
+    end
+
+  end
 end
 
 
