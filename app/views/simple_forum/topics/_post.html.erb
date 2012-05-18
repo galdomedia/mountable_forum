@@ -32,8 +32,8 @@
               <% if post.deletable_by?(authenticated_user, @forum.moderated_by?(authenticated_user)) %>
                   <%= link_to t('.delete'), simple_forum.delete_forum_topic_post_path(@forum, @topic, post), :method => :delete, :confirm => t('simple_forum.are_you_sure', :default => 'Are you sure?') %>
               <% end %>
-              <% if @topic.is_open? %>
-                  <%= link_to t('.cite'), "#", :onclick => "$('#new_post_form textarea').val('[quote=\"#{post.user.name}\"]\\n#{escape_javascript(post.body)}\\n[/quote]'); return false;" %>
+              <% if @topic.is_open? && !post.is_deleted? %>
+                  <%= link_to t('.cite'), "#new_post_form", :onclick => "$('#new_post_form textarea').val('#{escape_javascript("[quote=\"#{post.user.name}\"]\n#{post.body}\n[/quote]")}'); return false;", :class => 'cite-post' %>
               <% end %>
           <% end %>
         </td>
