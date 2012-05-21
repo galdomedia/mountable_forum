@@ -2,7 +2,7 @@ module SimpleForum
   class Engine < ::Rails::Engine
     isolate_namespace SimpleForum
 
-    initializer "simple_forum.assets_precompile" do |app|
+    initializer "simple_forum.assets_precompile", :group => :assets do |app|
       app.config.assets.precompile += ['simple_forum/admin.css']
       app.config.assets.precompile += ['simple_forum/markitup.css', 'simple_forum/markitup.js']
       app.config.assets.precompile += ['simple_forum/moderators.js']
